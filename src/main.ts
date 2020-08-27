@@ -8,7 +8,7 @@ import ApiService from '@/services/api.service';
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 
 ApiService.init();
 

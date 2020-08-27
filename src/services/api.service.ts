@@ -3,9 +3,9 @@ import config from '../config';
 
 const ApiService = {
     init() {
-        axios.interceptors.request.use((config: AxiosRequestConfig) => {
+        axios.interceptors.request.use((axConfig: AxiosRequestConfig) => {
             // TODO set app busy
-            return config;
+            return axConfig;
         });
 
         axios.interceptors.response.use((response: AxiosResponse) => {
@@ -16,7 +16,7 @@ const ApiService = {
             // TODO set not busy
         });
     },
-    
+
     get(resource: string, requestConfig?: AxiosRequestConfig) {
         const url = `${config.API_URL}/${resource}`;
         return axios.get(url, requestConfig);
