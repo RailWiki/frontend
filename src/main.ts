@@ -1,7 +1,16 @@
 import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import ApiService from '@/services/api.service';
+
+import 'bootstrap/scss/bootstrap.scss';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+Vue.use(BootstrapVue)
+
+ApiService.init();
 
 Vue.config.productionTip = false;
 
