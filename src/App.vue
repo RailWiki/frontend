@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-nav />
+    <main-nav v-if="!hideNavBar" />
 
     <div class="container body">
       <router-view />
@@ -15,15 +15,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import MainNav from '@/components/MainNav.vue';
 
 @Component({
   components: {
     MainNav
-  },
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  hideNavBar: Boolean = false;
+
+  created() {
+    this.loadNav();
+  };
+
+  @Watch('$route', { immediate: true })
+  loadNav() {
+    this.hideNavBar = this.$route?.meta?.hideNavBar ?? false;
+  };
+}
 </script>
 
 <style lang="scss">
