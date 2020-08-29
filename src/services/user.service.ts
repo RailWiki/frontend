@@ -10,7 +10,7 @@ const userService = {
       const response = await ApiService.get('users/current');
       const user = new UserModel(response.data);
       return user;
-    } catch(err) {
+    } catch (err) {
       throw new Error(err.response.data);
     }
   },
@@ -20,7 +20,7 @@ const userService = {
       const response = await ApiService.post('users', user);
       const newUser = new UserModel(response.data);
       return newUser;
-    } catch(err) {
+    } catch (err) {
       throw new Error(err.response.data);
     }
   },
@@ -46,6 +46,6 @@ const userService = {
         });
     });
   }
-}
+};
 
 export default userService;

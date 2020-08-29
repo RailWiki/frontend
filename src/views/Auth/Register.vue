@@ -77,17 +77,17 @@ export default class Register extends Vue {
   protected firstName: string = '';
   protected lastName: string = '';
 
-  protected isSuccessful: Boolean = false;
+  protected isSuccessful: boolean = false;
   protected errorMessage: string = '';
 
-  async created() {
+  protected async created() {
   }
 
   protected async register() {
     const request = new RegisterUserModel(this.username, this.password, this.firstName, this.lastName);
     UserService.register(request).then(() => {
       this.isSuccessful = true;
-    }).catch(err => {
+    }).catch((err) => {
       console.log('error', err);
       this.errorMessage = 'There was an error creating your account. Please try again.';
     });

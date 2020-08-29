@@ -55,7 +55,7 @@ export default {
       login() {
         UserService.login(this.username, this.password).then(() => {
           this.$route.push('/');
-        })
+        });
       }
     }
 };
