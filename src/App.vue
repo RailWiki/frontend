@@ -26,13 +26,17 @@ import MainNav from '@/components/MainNav.vue';
 export default class App extends Vue {
   hideNavBar: Boolean = false;
 
-  created() {
-    this.loadNav();
+  async created() {
+    await this.configureApp();
   };
 
   @Watch('$route', { immediate: true })
-  loadNav() {
+  async configureApp() {
     this.hideNavBar = this.$route?.meta?.hideNavBar ?? false;
+
+    if (await this.$auth.isAuthenticated()) {
+      await this.$store.dispatch('setCurrentUser');
+    }
   };
 }
 </script>

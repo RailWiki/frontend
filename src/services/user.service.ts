@@ -5,12 +5,20 @@ import config from '../config';
 import { OktaAuth, OktaAuthOptions, IDToken, AccessToken } from '@okta/okta-auth-js';
 
 const userService = {
+  async getCurrentUser(): Promise<UserModel> {
+    try {
+      const response = await ApiService.get('users/current');
+      const user = new UserModel(response.data);
+      return user;
+    } catch(err) {
+      throw new Error(err.response.data);
+    }
+  },
+
   async register(user: RegisterUserModel): Promise<UserModel> {
     try {
       const response = await ApiService.post('users', user);
-      console.log('api response', response);
-
-      const newUser = new UserModel(response.data.id, response.data.email, response.data.firstName, response.data.lastName);
+      const newUser = new UserModel(response.data);
       return newUser;
     } catch(err) {
       throw new Error(err.response.data);
