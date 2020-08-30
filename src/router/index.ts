@@ -6,6 +6,9 @@ import Home from '../views/Home.vue';
 import Login from '../views/Auth/Login.vue';
 import Register from '../views/Auth/Register.vue';
 
+import Albums from '../views/albums/Albums.vue';
+import MyAlbumList from '../views/albums/MyAlbumList.vue';
+
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
@@ -31,6 +34,16 @@ const routes: RouteConfig[] = [
     meta: { hideNavBar: true }
   },
   {
+    name: 'Albums',
+    path: '/albums',
+    component: Albums,
+    meta: { requiresAuth: true },
+    children: [
+      { path: 'mine', component: MyAlbumList, meta: { requiresAuth: true } },
+      { path: ':albumId', name: 'albumDetails', component: MyAlbumList }
+    ]
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
@@ -42,6 +55,7 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  linkActiveClass: 'active'
 });
 
 const onAuthRequired = async (from: Route, to: Route, next: any) => {

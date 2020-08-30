@@ -15,6 +15,7 @@ Vue.use(BootstrapVue);
 ApiService.init();
 
 Vue.use(Auth, config.auth);
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false;
 

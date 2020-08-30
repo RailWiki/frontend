@@ -7,11 +7,11 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <!-- <template v-if="isAuthenticated">
-            <b-nav-item to="/teams">Teams</b-nav-item>
-          </template> -->
+          <template v-if="isAuthenticated">
+            <b-nav-item to="/albums/mine">My Albums</b-nav-item>
+          </template>
         </b-navbar-nav>
-        
+
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/login" v-if="!isAuthenticated">Sign in</b-nav-item>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Albums from './modules/albums';
 import UserModel from '@/models/User';
 import UserService from '@/services/user.service';
 
@@ -28,5 +29,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    albums: Albums
   },
 });

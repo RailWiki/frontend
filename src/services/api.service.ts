@@ -15,14 +15,27 @@ const ApiService = {
             return axConfig;
         });
 
-        axios.interceptors.response.use((response: AxiosResponse) => {
+        axios.interceptors.response.use(
+          function(response) {
             // TODO set not busy
             return response;
-        }, (err) => {
-          // TODO set global error?
-          // TODO set not busy
-          return err;
-        });
+          },
+          function(err) {
+            // TODO set not busy
+            // TODO handle unauth error (redirect)
+            // TODO: handle 500 (see https://github.com/Netflix/dispatch/blob/develop/src/dispatch/static/dispatch/src/api.js#L37)
+
+            // TODO: Make 400s more useable
+
+            // console.log('the error', err.response);
+            // if (err.response.status === 400) {
+            //   const keys = Object.keys(err.response.data.errors)
+            //   console.log('error keys', keys.map(x => x.replace('$.', '')))
+            // }
+
+            return Promise.reject(err);
+          }
+        )
     },
 
     get(resource: string, requestConfig?: AxiosRequestConfig) {
