@@ -25,6 +25,13 @@ const albumService = {
     }
   },
 
+  async getById(id: number) : Promise<AlbumModel> {
+    return ApiService.get(`albums/${id}`).then((response: any) => {
+      const album = new AlbumModel(response.data);
+      return album;
+    });
+  },
+
   async create(album: AlbumModel): Promise<AlbumModel> {
     return ApiService.post('albums', album).then((response: any) => {
       const newAlbum = new AlbumModel(response.data);
@@ -33,6 +40,9 @@ const albumService = {
   },
 
   async update(album: AlbumModel): Promise<AlbumModel> {
+    // Clear the user model so ASP.NET Core doesn't balk at it
+    album.user = undefined;
+
     return ApiService.put(`albums/${album.id}`, album).then((response: any) => {
       album = new AlbumModel(response.data);
       return album;

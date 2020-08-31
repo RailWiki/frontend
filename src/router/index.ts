@@ -8,6 +8,7 @@ import Register from '../views/Auth/Register.vue';
 
 import Albums from '../views/albums/Albums.vue';
 import MyAlbumList from '../views/albums/MyAlbumList.vue';
+import ViewAlbum from '../views/albums/ViewAlbum.vue';
 
 Vue.use(VueRouter);
 
@@ -40,7 +41,7 @@ const routes: RouteConfig[] = [
     meta: { requiresAuth: true },
     children: [
       { path: 'mine', component: MyAlbumList, meta: { requiresAuth: true } },
-      { path: ':albumId', name: 'albumDetails', component: MyAlbumList }
+      { path: ':albumId', name: 'albumDetails', component: ViewAlbum }
     ]
   },
   {
