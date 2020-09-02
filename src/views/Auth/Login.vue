@@ -54,7 +54,7 @@ export default {
     methods: {
       login() {
         UserService.login(this.username, this.password).then(() => {
-          this.$route.push('/');
+          this.$router.push('/');
         });
       }
     }
