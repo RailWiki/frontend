@@ -40,6 +40,20 @@ const photoService = {
       const photos = response.data.map((x: any) => new PhotoModel(x));
       return photos;
     });
+  },
+
+  async updatePhoto(photo: PhotoModel): Promise<void> {
+    let data = {
+      ...photo
+    };
+
+    // Null these out otherwise the API will try to validate them
+    data.user = null;
+    data.album = null;
+
+    return ApiService.put(`photos/${photo.id}`, data).then((response: AxiosResponse) => {
+      // Nothing to do?
+    });
   }
 };
 

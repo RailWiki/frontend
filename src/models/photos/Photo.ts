@@ -17,9 +17,9 @@ export class PhotoFilesModel {
 export default class PhotoModel {
   public id: number = 0;
   public albumId: number = 0;
-  public album?: AlbumModel;
+  public album: AlbumModel | null = null;
   public userId: number = 0;
-  public user?: UserModel;
+  public user: UserModel | null = null;
   public author: string = '';
   public locationName?: string;
   public locationId?: number;
