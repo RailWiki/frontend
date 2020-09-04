@@ -36,11 +36,10 @@ export default {
 
   methods: {
     async refresh() {
-      const albumId = parseInt(this.$route.params.albumId);
       const photoId = parseInt(this.$route.params.photoId);
 
       console.log('refresh');
-      await this.$store.dispatch('photos/loadPhoto', {albumId, photoId}).then(() => {
+      await this.$store.dispatch('photos/loadPhoto', photoId).then(() => {
         console.log('loaded photo');
       })
     }

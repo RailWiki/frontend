@@ -28,11 +28,10 @@ export default class PhotoModule extends VuexModule {
   }
 
   @Action
-  async loadPhoto(data: any) {
-    console.log('load photo', data);
+  async loadPhoto(photoId: number) {
     this.context.commit('_setIsLoading', true);
 
-    return PhotoService.getById(data.albumId, data.photoId).then((photo: PhotoModel) => {
+    return PhotoService.getById(photoId).then((photo: PhotoModel) => {
       this.context.commit('_setIsLoading', false);
       this.context.commit('_setCurrentPhoto', photo);
     });

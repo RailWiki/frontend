@@ -48,9 +48,9 @@ const routes: RouteConfig[] = [
   {
     name: 'Photos',
     path: '/photos',
-    component: Albums, // TODO: change to a diff component
+    component: ViewPhoto, // TODO: change to a diff component
     children: [
-      { path: 'view/:albumId/:photoId', name: 'viewPhoto', component: ViewPhoto /* TODO: Change comp */ }
+      { path: 'view/:photoId', name: 'viewPhoto', component: ViewPhoto }
     ]
   },
   {
