@@ -1,7 +1,10 @@
-import Vue from 'vue';
 import { getField, updateField } from 'vuex-map-fields';
 import AlbumModel from '@/models/photos/Album';
+import PhotoModel from '@/models/photos/Photo';
 import AlbumService from '@/services/albumService';
+import PhotoService from '@/services/photoService';
+
+// TODO: Move photo things to the photo module
 
 const state = {
   userAlbums: new Array<AlbumModel>(),
@@ -13,12 +16,17 @@ const state = {
     isEditing: false,
     error: null,
     album: new AlbumModel(),
-  }
+  },
+
+  isUploading: false,
+
+  albumPhotos: new Array<PhotoModel>()
 };
 
 const getters = {
   getField,
-  userAlbums: (state: any) => state.userAlbums
+  userAlbums: (state: any) => state.userAlbums,
+  // albumPhotos: (state: any) => state.albumPhotos
 };
 
 const mutations = {
@@ -46,7 +54,19 @@ const mutations = {
   },
   SET_EDITING_ERROR(state, error) {
     state.editing.error = error;
-  }
+  },
+
+  SET_ALBUM_PHOTOS(state, photos) {
+    state.albumPhotos = photos;
+  },
+
+  SET_IS_UPLOADING(state, isUploading: boolean) {
+    state.isUploading = isUploading
+  },
+
+  ADD_PHOTOS_TO_ALBUM(state, photos) {
+    state.albumPhotos = [...photos, ...state.albumPhotos];
+  },
 }
 
 const actions = {
@@ -74,6 +94,14 @@ const actions = {
     })
   },
 
+  async loadAlbumPhotos({ commit }, albumId: number) {
+    commit('SET_ALBUM_PHOTOS', []); // Clear any previous photos so there's no "flash"
+
+    return PhotoService.getByAlbumId(albumId).then((photos: PhotoModel[]) => {
+      commit('SET_ALBUM_PHOTOS', photos);
+    })
+  },
+
   async save({ commit, state }) {
     // TODO: show toast after saved (success & error)
 
@@ -95,6 +123,14 @@ const actions = {
         commit('SET_EDITING_ERROR', 'There was an error updating your album. Please try again.');
       });
     }
+  },
+
+  async uploadPhotos({ commit }, data: any) {
+    commit('SET_IS_UPLOADING', true);
+    return PhotoService.uploadPhotos(data.albumId, data.files).then((result: Array<PhotoModel>) => {
+      commit('ADD_PHOTOS_TO_ALBUM', result);
+      commit('SET_IS_UPLOADING', false);
+    });
   }
 };
 

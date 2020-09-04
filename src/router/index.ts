@@ -9,6 +9,7 @@ import Register from '../views/Auth/Register.vue';
 import Albums from '../views/albums/Albums.vue';
 import MyAlbumList from '../views/albums/MyAlbumList.vue';
 import ViewAlbum from '../views/albums/ViewAlbum.vue';
+import ViewPhoto from '../views/photos/ViewPhoto.vue';
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,14 @@ const routes: RouteConfig[] = [
     children: [
       { path: 'mine', component: MyAlbumList, meta: { requiresAuth: true } },
       { path: ':albumId', name: 'albumDetails', component: ViewAlbum }
+    ]
+  },
+  {
+    name: 'Photos',
+    path: '/photos',
+    component: Albums, // TODO: change to a diff component
+    children: [
+      { path: 'view/:albumId/:photoId', name: 'viewPhoto', component: ViewPhoto /* TODO: Change comp */ }
     ]
   },
   {

@@ -11,6 +11,11 @@
         <b-button variant="secondary" @click='editAlbum(album)'>Edit</b-button>
       </div>
 
+      <!-- TODO: Only show for album owner -->
+      <photo-uploader :albumId="album.id" class="mb-2" />
+
+      <grid-view :photos="albumPhotos" />
+
     </template>
 
     <b-modal v-model="isEditing" hide-footer title="Edit Album">
@@ -25,9 +30,14 @@ import { mapActions } from 'vuex';
 import EditAblum from './EditAlbum.vue';
 import AlbumModel from '../../models/photos/Album';
 
+import PhotoUploader from '../../components/photos/PhotoUploader.vue';
+import GridView from '@/components/photos/GridView.vue';
+
 export default {
   components: {
-    'edit-album': EditAblum
+    'edit-album': EditAblum,
+    PhotoUploader,
+    GridView
   },
 
   data() {
@@ -48,16 +58,21 @@ export default {
     ...mapFields('albums', [
       'isLoading',
       'viewing.album',
-      'editing.isEditing'
-    ])
+      'editing.isEditing',
+      'albumPhotos'
+    ]),
+    // ...mapFields([
+    //   'currentUser'
+    // ]),
   },
 
   methods: {
-    ...mapActions('albums', [ 'loadAlbum', 'editAlbum' ]),
+    ...mapActions('albums', [ 'loadAlbum', 'editAlbum', 'loadAlbumPhotos' ]),
 
     async loadPage() {
       const albumId = parseInt(this.$route.params.albumId);
       await this.$store.dispatch('albums/loadAlbum', albumId);
+      await this.loadAlbumPhotos(albumId);
     }
   }
 }
