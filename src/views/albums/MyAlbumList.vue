@@ -11,7 +11,7 @@
         <div class="card">
           <img src="https://placehold.it/362x190" class="card-img-top" alt="...">
           <div class="card-body">
-            <router-link :to="{ name: 'albumDetails', params: { albumId: album.id } }">
+            <router-link :to="{ name: 'viewAlbum', params: { albumId: album.id } }">
               <h5 class="card-title">
                 {{ album.title}}
               </h5>

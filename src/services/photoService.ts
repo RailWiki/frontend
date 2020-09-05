@@ -48,7 +48,6 @@ const photoService = {
     };
 
     // Null these out otherwise the API will try to validate them
-    data.user = null;
     data.album = null;
 
     return ApiService.put(`photos/${photo.id}`, data).then((response: AxiosResponse) => {

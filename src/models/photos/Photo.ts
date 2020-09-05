@@ -19,7 +19,7 @@ export default class PhotoModel {
   public albumId: number = 0;
   public album: AlbumModel | null = null;
   public userId: number = 0;
-  public user: UserModel | null = null;
+  public userName: string | null = null;
   public author: string = '';
   public locationName?: string;
   public locationId?: number;
@@ -35,7 +35,6 @@ export default class PhotoModel {
     if (data) {
       Object.assign(this, data);
       this.album = new AlbumModel(data.album);
-      this.user = new UserModel(data.user);
       this.files = new PhotoFilesModel(data.files);
     }
   }

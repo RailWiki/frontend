@@ -42,7 +42,7 @@ const routes: RouteConfig[] = [
     meta: { requiresAuth: true },
     children: [
       { path: 'mine', component: MyAlbumList, meta: { requiresAuth: true } },
-      { path: ':albumId', name: 'albumDetails', component: ViewAlbum }
+      { path: ':albumId', name: 'viewAlbum', component: ViewAlbum }
     ]
   },
   {
