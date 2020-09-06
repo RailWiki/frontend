@@ -1,7 +1,11 @@
 <template>
   <div class="road-type-list">
     <b-list-group flush>
-      <b-list-group-item v-for="type in sortedTypes" :key="type.id" :to="{name: 'roadsList', params: { typeSlug: type.slug } }">
+      <b-list-group-item
+        v-for="type in sortedTypes"
+        :key="type.id"
+        :to="{name: 'roadsList', params: { typeSlug: type.slug } }"
+        :active="currentRoadType && currentRoadType.id === type.id">
         {{ type.name }}
       </b-list-group-item>
     </b-list-group>
