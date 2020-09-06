@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 import config from '../config';
 
 export default Vue.extend({
@@ -41,14 +42,18 @@ export default Vue.extend({
     created() {
         this.authenticate();
     },
+    computed: {
+      ...mapGetters([
+        'currentUser'
+      ])
+    },
     watch: {
         $route: 'authenticate'
     },
     methods: {
         async authenticate() {
             this.isAuthenticated = await this.$auth.isAuthenticated();
-            const user = await this.$auth.getUser();
-            this.userName = user ? user.name : null;
+            this.userName = this.currentUser ? this.currentUser.firstName : null;
         },
         async logout() {
             await this.$auth.logout();
