@@ -1,7 +1,8 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { createLogger } from 'vuex';
 import Albums from './modules/albums';
 import PhotosModule from './modules/photos';
+import RoadsModule from './modules/roads';
 import UserModel from '@/models/User';
 import UserService from '@/services/user.service';
 
@@ -10,6 +11,12 @@ Vue.use(Vuex);
 export interface AppState {
   currentUser: UserModel | null
 }
+
+const logger = createLogger({
+  collapsed: true,
+  logActions: true,
+  logMutations: false
+});
 
 export default new Vuex.Store({
   state: {
@@ -35,5 +42,9 @@ export default new Vuex.Store({
   modules: {
     albums: Albums,
     photos: PhotosModule,
+    roads: RoadsModule
   },
+  plugins: [
+    logger
+  ]
 });

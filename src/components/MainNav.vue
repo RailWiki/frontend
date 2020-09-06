@@ -9,6 +9,7 @@
         <b-navbar-nav>
           <template v-if="isAuthenticated">
             <b-nav-item to="/albums/mine">My Albums</b-nav-item>
+            <b-nav-item :to="{name: 'roadsList'}">Railroads</b-nav-item>
           </template>
         </b-navbar-nav>
 

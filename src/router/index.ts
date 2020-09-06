@@ -13,6 +13,9 @@ import MyAlbumList from '../views/albums/MyAlbumList.vue';
 import ViewAlbum from '../views/albums/ViewAlbum.vue';
 import ViewPhoto from '../views/photos/ViewPhoto.vue';
 
+import RoadsList from '@/views/roads/RoadList.vue';
+import RoadDetails from '@/views/roads/RoadDetails.vue';
+
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
@@ -53,6 +56,15 @@ const routes: RouteConfig[] = [
     component: GenericRouterView, // TODO: change to a diff component
     children: [
       { path: 'view/:photoId', name: 'viewPhoto', component: ViewPhoto }
+    ]
+  },
+  {
+    name: 'roads',
+    path: '/railroads',
+    component: GenericRouterView,
+    children: [
+      { path: ':typeSlug?', name: 'roadsList', component: RoadsList },
+      { path: 'details/:slug', name: 'roadDetails', component: RoadDetails }
     ]
   },
   {
