@@ -3,6 +3,8 @@ import Auth from '@okta/okta-vue';
 import VueRouter, { RouteConfig, Route } from 'vue-router';
 import Home from '../views/Home.vue';
 
+import GenericRouterView from '@/views/GenericRouterView.vue';
+
 import Login from '../views/Auth/Login.vue';
 import Register from '../views/Auth/Register.vue';
 
@@ -48,7 +50,7 @@ const routes: RouteConfig[] = [
   {
     name: 'Photos',
     path: '/photos',
-    component: ViewPhoto, // TODO: change to a diff component
+    component: GenericRouterView, // TODO: change to a diff component
     children: [
       { path: 'view/:photoId', name: 'viewPhoto', component: ViewPhoto }
     ]
