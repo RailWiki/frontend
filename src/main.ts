@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
+import Multiselect from 'vue-multiselect';
 import Auth from '@okta/okta-vue';
 import App from './App.vue';
 import router from './router';
@@ -9,8 +10,10 @@ import config from './config';
 
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 Vue.use(BootstrapVue);
+Vue.component('multiselect', Multiselect);
 
 ApiService.init();
 
