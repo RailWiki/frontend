@@ -1,5 +1,5 @@
 import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
-import RoadModel from '@/models/rosters/Road';
+import RoadModel, { FilterRoadsModel } from '@/models/rosters/Road';
 import RoadTypeModel from '@/models/rosters/RoadType';
 import roadService from '@/services/roadService';
 import PaginatedModel from '@/models/PaginatedModel';
@@ -13,6 +13,7 @@ export default class RoadModule extends VuexModule {
 
   _currentRoad: RoadModel | null = null;
   _roads: PaginatedModel<RoadModel> = new PaginatedModel<RoadModel>();
+  _roadsFilter: FilterRoadsModel = new FilterRoadsModel();
 
   get isRoadsLoading(): boolean {
     return this._isRoadsLoading;
@@ -32,6 +33,10 @@ export default class RoadModule extends VuexModule {
 
   get roads(): PaginatedModel<RoadModel> {
     return this._roads;
+  }
+
+  get roadsFilter(): FilterRoadsModel {
+    return this._roadsFilter;
   }
 
   @Mutation
@@ -59,6 +64,11 @@ export default class RoadModule extends VuexModule {
     this._roads = roads;
   }
 
+  @Mutation
+  _setRoadsFilter(filter: FilterRoadsModel) {
+    this._roadsFilter = filter;
+  }
+
   @Action
   async loadRoadTypes() {
     this.context.commit('_setIsRoadsLoading', true);
@@ -80,14 +90,19 @@ export default class RoadModule extends VuexModule {
   }
 
   @Action
-  async loadRoads(pageNum: number | null) {
-    const typeId = this.currentRoadType ? this.currentRoadType.id : null;
+  setRoadsFilter(filter: FilterRoadsModel) {
+    this.context.commit('_setRoadsFilter', filter);
+  }
 
-    if (!pageNum) {
-      pageNum = 1;
-    }
+  @Action
+  async loadRoads(pageNum: number | null, name?: string) {
+    const filter = this.context.getters['roadsFilter'] as FilterRoadsModel;
 
-    return roadService.getRoads(typeId, pageNum).then((roads: PaginatedModel<RoadModel>) => {
+    const currentRoadType = this.context.getters['currentRoadType'];
+    filter.typeId = currentRoadType ? currentRoadType.id : null;
+    filter.page = pageNum || 1;
+
+    return roadService.getRoads(filter).then((roads: PaginatedModel<RoadModel>) => {
       this.context.commit('_setRoads', roads);
       this.context.commit('_setIsRoadsLoading', false);
     });
