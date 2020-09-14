@@ -10,6 +10,7 @@
           <template v-if="isAuthenticated">
             <b-nav-item to="/albums/mine">My Albums</b-nav-item>
             <b-nav-item :to="{name: 'roadsList'}">Railroads</b-nav-item>
+            <b-nav-item :to="{name: 'locomotiveList'}">Locomotives</b-nav-item>
           </template>
         </b-navbar-nav>
 
@@ -18,7 +19,7 @@
           <b-nav-item to="/login" v-if="!isAuthenticated">Sign in</b-nav-item>
           <b-nav-item-dropdown right v-if="isAuthenticated">
             <!-- Using 'button-content' slot -->
-            <template slot="button-content">{{ userName }}</template>
+            <template slot="button-content">{{ currentUser ? currentUser.firstName : '' }}</template>
             <b-dropdown-item to="/user/profile">Profile</b-dropdown-item>
             <b-dropdown-item href="#" v-on:click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -36,8 +37,7 @@ import config from '../config';
 export default Vue.extend({
     data() {
         return {
-            isAuthenticated: false,
-            userName: ''
+            isAuthenticated: false
         };
     },
     created() {
@@ -54,7 +54,6 @@ export default Vue.extend({
     methods: {
         async authenticate() {
             this.isAuthenticated = await this.$auth.isAuthenticated();
-            this.userName = this.currentUser ? this.currentUser.firstName : null;
         },
         async logout() {
             await this.$auth.logout();

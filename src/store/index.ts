@@ -3,6 +3,7 @@ import Vuex, { createLogger } from 'vuex';
 import Albums from './modules/albums';
 import PhotosModule from './modules/photos';
 import RoadsModule from './modules/roads';
+import LocomotivesModule from './modules/locomotives';
 import UserModel from '@/models/User';
 import UserService from '@/services/user.service';
 
@@ -42,7 +43,8 @@ export default new Vuex.Store({
   modules: {
     albums: Albums,
     photos: PhotosModule,
-    roads: RoadsModule
+    roads: RoadsModule,
+    locomotives: LocomotivesModule
   },
   plugins: [
     logger

@@ -16,6 +16,8 @@ import ViewPhoto from '../views/photos/ViewPhoto.vue';
 import RoadsList from '@/views/roads/RoadList.vue';
 import RoadDetails from '@/views/roads/RoadDetails.vue';
 
+import LocomotiveList from '@/views/locomotives/LocomotiveList.vue';
+
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
@@ -65,6 +67,14 @@ const routes: RouteConfig[] = [
     children: [
       { path: ':typeSlug?', name: 'roadsList', component: RoadsList },
       { path: 'details/:slug', name: 'roadDetails', component: RoadDetails }
+    ]
+  },
+  {
+    name: 'locomotives',
+    path: '/locomotives',
+    component: GenericRouterView,
+    children: [
+      { path: '', name: 'locomotiveList', component: LocomotiveList }
     ]
   },
   {
