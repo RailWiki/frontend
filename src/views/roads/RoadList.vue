@@ -36,6 +36,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import RoadService from '@/services/roadService';
 import RoadTypeList from '@/components/roads/RoadTypeList.vue'
+import { FilterRoadsModel } from '@/models/rosters/Road';
 
 export default {
   components: {
@@ -81,10 +82,15 @@ export default {
     ]),
     async load() {
       const typeSlug = this.$route.params.typeSlug ? this.$route.params.typeSlug : 'major-carriers';
-      const page = this.$route.query.page ? this.$route.query.page : 1;
+      const page = this.$route.query.page ? parseInt(this.$route.query.page) : 1;
 
       await this.loadRoadTypeBySlug(typeSlug);
-      await this.loadRoads(page);
+
+      const roadFilter = new FilterRoadsModel();
+      roadFilter.typeId = this.currentRoadType ? this.currentRoadType.id : null;
+      roadFilter.page = page;
+
+      await this.loadRoads(roadFilter);
 
       this.currentPage = page;
     },

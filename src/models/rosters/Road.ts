@@ -1,4 +1,5 @@
 import RoadTypeModel from './RoadType';
+import FilterModel from '../FilterModel';
 
 export default class RoadModel {
   public id: number = 0;
@@ -22,4 +23,12 @@ export default class RoadModel {
       this.roadType = new RoadTypeModel(data.roadType);
     }
   }
+}
+
+export class FilterRoadsModel extends FilterModel {
+  public typeId: number | null = null;
+  public query: string | null = null;
+
+  public page: number = 1;
+  public pageSize: number = 50;
 }

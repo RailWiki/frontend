@@ -1,20 +1,16 @@
 import { AxiosResponse } from 'axios';
 import ApiService from './api.service';
 import PaginatedModel from '@/models/PaginatedModel';
-import RoadModel from '@/models/rosters/Road';
+import RoadModel, { FilterRoadsModel } from '@/models/rosters/Road';
 import RoadTypeModel from '@/models/rosters/RoadType';
 
 const roadService = {
-  async getRoads(roadTypeId: number | null, page: number): Promise<PaginatedModel<RoadModel>> {
+  async getRoads(filter?: FilterRoadsModel): Promise<PaginatedModel<RoadModel>> {
     let url = 'roads';
-    if (roadTypeId) {
-      url = `${url}?typeId=${roadTypeId}`;
-    }
 
-    if (url.indexOf('?') > 0) {
-      url = `${url}&page=${page}`
-    } else {
-      url = `${url}?page=${page}`
+    if (filter) {
+      const query = filter.toQueryString();
+      url = `${url}?${query}`;
     }
 
     return ApiService.get(url).then((response: AxiosResponse) => {

@@ -95,16 +95,21 @@ export default class RoadModule extends VuexModule {
   }
 
   @Action
-  async loadRoads(pageNum: number | null, name?: string) {
-    const filter = this.context.getters['roadsFilter'] as FilterRoadsModel;
+  async loadRoads(filter?: FilterRoadsModel) {
+    // const filter = this._roadsFilter;
 
-    const currentRoadType = this.context.getters['currentRoadType'];
-    filter.typeId = currentRoadType ? currentRoadType.id : null;
-    filter.page = pageNum || 1;
+    // filter.typeId = this._currentRoadType ? this._currentRoadType.id : null;
 
     return roadService.getRoads(filter).then((roads: PaginatedModel<RoadModel>) => {
       this.context.commit('_setRoads', roads);
       this.context.commit('_setIsRoadsLoading', false);
     });
   }
+
+  // @Action
+  // // TODO: this doesn't work due to complaining about dynamic modules??
+  // async search(filter: FilterRoadsModel) {
+  //   this.context.commit('_setRoadsFilter', filter);
+  //   await this.context.dispatch('loadRoads');
+  // }
 }
