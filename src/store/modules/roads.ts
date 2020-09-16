@@ -70,7 +70,7 @@ export default class RoadModule extends VuexModule {
   }
 
   @Action
-  async loadRoadTypes() {
+  public async loadRoadTypes() {
     this.context.commit('_setIsRoadsLoading', true);
 
     return roadService.getRoadTypes().then((types: RoadTypeModel[]) => {
@@ -80,7 +80,7 @@ export default class RoadModule extends VuexModule {
   }
 
   @Action
-  async loadRoadTypeBySlug(typeSlug: string) {
+  public async loadRoadTypeBySlug(typeSlug: string) {
     this.context.commit('_setIsRoadsLoading', true);
 
     return roadService.getRoadTypeBySlug(typeSlug).then((type: RoadTypeModel) => {
@@ -90,12 +90,12 @@ export default class RoadModule extends VuexModule {
   }
 
   @Action
-  setRoadsFilter(filter: FilterRoadsModel) {
+  public setRoadsFilter(filter: FilterRoadsModel) {
     this.context.commit('_setRoadsFilter', filter);
   }
 
   @Action
-  async loadRoads(filter?: FilterRoadsModel) {
+  public async loadRoads(filter?: FilterRoadsModel) {
     // const filter = this._roadsFilter;
 
     // filter.typeId = this._currentRoadType ? this._currentRoadType.id : null;

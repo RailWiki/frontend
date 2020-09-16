@@ -35,7 +35,7 @@ const ApiService = {
 
             return Promise.reject(err);
           }
-        )
+        );
     },
 
     get(resource: string, requestConfig?: AxiosRequestConfig) {

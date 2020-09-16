@@ -25,7 +25,7 @@ const albumService = {
     }
   },
 
-  async getById(id: number) : Promise<AlbumModel> {
+  async getById(id: number): Promise<AlbumModel> {
     return ApiService.get(`albums/${id}`).then((response: any) => {
       const album = new AlbumModel(response.data);
       return album;
@@ -36,7 +36,7 @@ const albumService = {
     return ApiService.post('albums', album).then((response: any) => {
       const newAlbum = new AlbumModel(response.data);
       return newAlbum;
-    })
+    });
   },
 
   async update(album: AlbumModel): Promise<AlbumModel> {

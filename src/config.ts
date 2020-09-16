@@ -6,13 +6,13 @@ const { VUE_APP_API_URL,
 export default {
     apiUrl: VUE_APP_API_URL,
     auth: {
-        clientId: clientId,
-        issuer: issuer,
+        clientId,
+        issuer,
         redirectUri: 'http://localhost:8080/implicit/callback',
         scopes: [ 'openid', 'profile' ],
         pkce: true,
         testing: {
-            disableHttpsCheck: disableHttpsCheck
+            disableHttpsCheck
         }
     }
 };

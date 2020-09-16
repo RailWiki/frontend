@@ -10,7 +10,7 @@ import UserService from '@/services/user.service';
 Vue.use(Vuex);
 
 export interface AppState {
-  currentUser: UserModel | null
+  currentUser: UserModel | null;
 }
 
 const logger = createLogger({
@@ -34,7 +34,6 @@ export default new Vuex.Store({
   actions: {
     async setCurrentUser({ commit, state }): Promise<void> {
       if (!state.currentUser) {
-        console.log('action: set current user');
         const user = await UserService.getCurrentUser();
         commit('SET_CURRENT_USER', user);
       }
@@ -47,6 +46,6 @@ export default new Vuex.Store({
     locomotives: LocomotivesModule
   },
   plugins: [
-    logger
+    logger,
   ]
 });

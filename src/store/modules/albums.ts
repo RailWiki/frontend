@@ -33,7 +33,7 @@ const mutations = {
   updateField,
 
   SET_IS_LOADING(state, loading) {
-    state.isLoading = loading
+    state.isLoading = loading;
   },
 
   SET_VIEWING_ALBUM(state, album) {
@@ -41,7 +41,7 @@ const mutations = {
   },
 
   SET_USER_ALBUMS(state, albums) {
-    state.userAlbums = albums
+    state.userAlbums = albums;
   },
   ADD_USER_ALBUM(state, newAlbum) {
     state.userAlbums = [...state.userAlbums, newAlbum];
@@ -61,13 +61,13 @@ const mutations = {
   },
 
   SET_IS_UPLOADING(state, isUploading: boolean) {
-    state.isUploading = isUploading
+    state.isUploading = isUploading;
   },
 
   ADD_PHOTOS_TO_ALBUM(state, photos) {
     state.albumPhotos = [...photos, ...state.albumPhotos];
   },
-}
+};
 
 const actions = {
   showAddAlbum({ commit }) {
@@ -91,7 +91,7 @@ const actions = {
     return AlbumService.getById(albumId).then((album: AlbumModel) => {
       commit('SET_VIEWING_ALBUM', album);
       commit('SET_IS_LOADING', false);
-    })
+    });
   },
 
   async loadAlbumPhotos({ commit }, albumId: number) {
@@ -99,7 +99,7 @@ const actions = {
 
     return PhotoService.getByAlbumId(albumId).then((photos: PhotoModel[]) => {
       commit('SET_ALBUM_PHOTOS', photos);
-    })
+    });
   },
 
   async save({ commit, state }) {
@@ -127,7 +127,7 @@ const actions = {
 
   async uploadPhotos({ commit }, data: any) {
     commit('SET_IS_UPLOADING', true);
-    return PhotoService.uploadPhotos(data.albumId, data.files).then((result: Array<PhotoModel>) => {
+    return PhotoService.uploadPhotos(data.albumId, data.files).then((result: PhotoModel[]) => {
       commit('ADD_PHOTOS_TO_ALBUM', result);
       commit('SET_IS_UPLOADING', false);
     });
@@ -140,4 +140,4 @@ export default {
   getters,
   mutations,
   actions
-}
+};

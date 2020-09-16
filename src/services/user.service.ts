@@ -1,10 +1,26 @@
 import ApiService from './api.service';
 import RegisterUserModel from '../models/RegisterUser';
-import UserModel from '@/models/User';
+import UserModel, { FilterUsersModel } from '@/models/User';
 import config from '../config';
 import { OktaAuth, OktaAuthOptions, IDToken, AccessToken } from '@okta/okta-auth-js';
+import PaginatedModel from '@/models/PaginatedModel';
+import { AxiosResponse } from 'axios';
 
 const userService = {
+  async getUsers(filter?: FilterUsersModel): Promise<PaginatedModel<UserModel>> {
+    let url = 'users';
+
+    if (filter) {
+      url = `${url}?${filter.toQueryString()}`;
+    }
+
+    return ApiService.get(url).then((response: AxiosResponse) => {
+      const pagedResponse = new PaginatedModel<UserModel>(response);
+      pagedResponse.data = response.data.map((x: any) => new UserModel(x));
+      return pagedResponse;
+    });
+  },
+
   async getCurrentUser(): Promise<UserModel> {
     try {
       const response = await ApiService.get('users/current');
@@ -33,8 +49,8 @@ const userService = {
     const oktaAuth = new OktaAuth(opts);
 
     return oktaAuth.signIn({
-        username: username,
-        password: password
+        username,
+        password
     }).then((signInResponse) => {
         oktaAuth.token.getWithoutPrompt({
             responseType: 'id_token',

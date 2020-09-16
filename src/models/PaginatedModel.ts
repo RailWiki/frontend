@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 export default class PaginatedModel<TModel> {
 
-  public data: Array<TModel> = new Array<TModel>();
+  public data: TModel[] = new Array<TModel>();
 
   public total: number = 0;
   public pageSize: number = 0;

@@ -45,7 +45,7 @@ export default Vue.extend({
     },
     computed: {
       ...mapGetters([
-        'currentUser'
+        'currentUser',
       ])
     },
     watch: {

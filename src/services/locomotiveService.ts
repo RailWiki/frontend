@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import ApiService from './api.service';
 import PaginatedModel from '@/models/PaginatedModel';
-import LocomotiveModel, { FilterLocomotivesModel } from '@/models/rosters/Locomotive'
+import LocomotiveModel, { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
 import PhotoModel from '@/models/photos/Photo';
 
 const locomotiveService = {
@@ -37,6 +37,6 @@ const locomotiveService = {
       return photos;
     });
   }
-}
+};
 
 export default locomotiveService;

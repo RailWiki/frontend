@@ -59,7 +59,7 @@ export default class PhotoModule extends VuexModule {
   }
 
   @Action
-  async updatePhoto(photo: PhotoModel) {
+  public async updatePhoto(photo: PhotoModel) {
     this.context.commit('_setEditingError', null);
     this.context.commit('_setIsSaving', true);
 
@@ -68,18 +68,18 @@ export default class PhotoModule extends VuexModule {
     }).catch((err: any) => {
       this.context.commit('_setIsSaving', false);
       this.context.commit('_setEditingError', 'There was an error saving your photo');
-    })
+    });
   }
 }
 
 export interface IPhotoState {
-  isLoading: boolean,
-  photo?: PhotoModel,
-  editing: IEditPhotoState
+  isLoading: boolean;
+  photo?: PhotoModel;
+  editing: IEditPhotoState;
 }
 
 export interface IEditPhotoState {
-  isEditing: boolean,
-  photo?: PhotoModel,
-  error?: string
+  isEditing: boolean;
+  photo?: PhotoModel;
+  error?: string;
 }

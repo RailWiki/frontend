@@ -62,7 +62,7 @@ export default class LocomotiveModule extends VuexModule {
   }
 
   @Action
-  async loadLocomotive(id: number) {
+  public async loadLocomotive(id: number) {
     this.context.commit('_setIsLoading', true);
 
     return LocomotiveService.getLocomotive(id).then((locomotive: LocomotiveModel) => {
@@ -72,10 +72,10 @@ export default class LocomotiveModule extends VuexModule {
   }
 
   @Action
-  async loadLocomotives() {
+  public async loadLocomotives() {
     this.context.commit('_setIsLoading', true);
 
-    return LocomotiveService.getLocomotives(this.context.getters['filters']).then((locomotives: PaginatedModel<LocomotiveModel>) => {
+    return LocomotiveService.getLocomotives(this.context.getters.filters).then((locomotives: PaginatedModel<LocomotiveModel>) => {
       this.context.commit('_setLocomotives', locomotives);
       this.context.commit('_setIsLoading', false);
 
@@ -83,13 +83,13 @@ export default class LocomotiveModule extends VuexModule {
   }
 
   @Action
-  async search(filter: FilterLocomotivesModel) {
+  public async search(filter: FilterLocomotivesModel) {
     this.context.commit('_setFilters', filter);
     await this.context.dispatch('loadLocomotives');
   }
 
   @Action
-  async loadLocomotivePhotos(id: number) {
+  public async loadLocomotivePhotos(id: number) {
     this.context.commit('_setIsLoading', true);
 
     return LocomotiveService.getPhotosForLocomotive(id).then((photos: PhotoModel[]) => {

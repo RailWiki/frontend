@@ -34,7 +34,7 @@ const roadService = {
       return type;
     });
   }
-}
+};
 
 export default roadService;
 
