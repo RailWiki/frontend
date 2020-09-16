@@ -17,6 +17,7 @@ import RoadsList from '@/views/roads/RoadList.vue';
 import RoadDetails from '@/views/roads/RoadDetails.vue';
 
 import LocomotiveList from '@/views/locomotives/LocomotiveList.vue';
+import LocomotiveDetails from '@/views/locomotives/LocomotiveDetails.vue';
 
 Vue.use(VueRouter);
 
@@ -74,7 +75,8 @@ const routes: RouteConfig[] = [
     path: '/locomotives',
     component: GenericRouterView,
     children: [
-      { path: '', name: 'locomotiveList', component: LocomotiveList }
+      { path: '', name: 'locomotiveList', component: LocomotiveList },
+      { path: ':id', name: 'locomotiveDetails', component: LocomotiveDetails }
     ]
   },
   {

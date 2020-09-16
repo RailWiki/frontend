@@ -13,6 +13,11 @@
           stacked="sm"
           :items="locomotives.data"
           :fields="locomotiveGridFields">
+
+            <template v-slot:cell(roadNumber)="data">
+              <router-link :to="{name: 'locomotiveDetails', params: { id: data.item.id } }">{{ data.value }}</router-link>
+            </template>
+
         </b-table>
 
         <b-pagination-nav

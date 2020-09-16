@@ -10,6 +10,13 @@
             <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }">
               {{ photo.title }}
             </router-link>
+
+            <div v-if="showAuthor && photo.userName">
+              {{ photo.userName }}
+            </div>
+            <div v-if="showLocation && photo.location">
+              {{ photo.location.name }}
+            </div>
           </div>
         </div>
       </div>
@@ -24,6 +31,14 @@ export default {
   props: {
     photos: {
       type: Array
+    },
+    showAuthor: {
+      type: Boolean,
+      default: false
+    },
+    showLocation: {
+      type: Boolean,
+      default: false
     }
   }
 }
