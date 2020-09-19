@@ -3,6 +3,7 @@ import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
 import PhotoModel from '@/models/photos/Photo';
 import PhotoService from '@/services/photoService';
 import AlbumService from '@/services/albumService';
+import photoService from '@/services/photoService';
 
 @Module({ namespaced: true })
 export default class PhotoModule extends VuexModule {
@@ -11,6 +12,8 @@ export default class PhotoModule extends VuexModule {
 
   _isSaving: boolean = false;
   _editingError: string | null = null;
+
+  _latestPhotos: PhotoModel[] = new Array<PhotoModel>();
 
   get isLoading(): boolean {
     return this._isLoading;
@@ -26,6 +29,10 @@ export default class PhotoModule extends VuexModule {
 
   get editingError(): string | null {
     return this._editingError;
+  }
+
+  get latestPhotos(): PhotoModel[] {
+    return this._latestPhotos;
   }
 
   @Mutation
@@ -46,6 +53,21 @@ export default class PhotoModule extends VuexModule {
   @Mutation
   _setEditingError(error: string | null) {
     this._editingError = error;
+  }
+
+  @Mutation
+  _setLatestPhotos(photos: PhotoModel[]) {
+    this._latestPhotos = photos;
+  }
+
+  @Action
+  async loadLatestPhotos(max: number) {
+    this.context.commit('_setIsLoading', true);
+
+    return PhotoService.getLatest(max).then((photos: PhotoModel[]) => {
+      this.context.commit('_setLatestPhotos', photos);
+      this.context.commit('_setIsLoading', false);
+    });
   }
 
   @Action

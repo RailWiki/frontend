@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import ApiService from '@/services/api.service';
 import config from './config';
+import * as helpers from './helpers';
 
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -19,6 +20,8 @@ ApiService.init();
 
 Vue.use(Auth, config.auth);
 Vue.use(require('vue-moment'));
+
+Vue.filter('truncate', helpers.truncateString);
 
 Vue.config.productionTip = false;
 

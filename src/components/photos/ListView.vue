@@ -1,14 +1,18 @@
 <template>
   <div id="photo-list">
-    <div class="photo d-flex my-4" v-for="photo in photos" :key="photo.id">
+    <div class="photo d-flex my-4" :class="photoSize" v-for="photo in photos" :key="photo.id">
       <div class="image pr-4">
         <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }">
-          <img :src="photo.files.small" class="shadow-sm" :alt="photo.title" />
+          <img
+            :src="photo.files.small"
+            class="shadow-sm"
+            :alt="photo.title"
+            :title="photo.title" />
         </router-link>
       </div>
       <div class="details">
-        <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }">
-          {{ photo.title }}
+        <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }" :title="photo.title">
+          {{ photo.title | truncate(50) }}
         </router-link>
 
         <div v-if="showAuthor && photo.userName">
@@ -30,6 +34,10 @@ export default {
     photos: {
       type: Array
     },
+    photoSize: {
+      type: String,
+      default: 'sm'
+    },
     showAuthor: {
       type: Boolean,
       default: false
@@ -44,6 +52,15 @@ export default {
 
 <style lang="scss" scoped>
   .photo {
+    &.xs {
+      .image {
+        flex: 0 0 110px;
+
+        img {
+          max-width: 125px;
+        }
+      }
+    }
     .image {
       flex: 0 0 200px;
       img {
