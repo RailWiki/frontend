@@ -1,3 +1,5 @@
+import FilterModel from './FilterModel';
+
 export default class UserModel {
   public id: number = 0;
   public email: string = '';
@@ -7,4 +9,8 @@ export default class UserModel {
   constructor(data: any) {
     Object.assign(this, data);
   }
+}
+
+export class FilterUsersModel extends FilterModel {
+  public query: string | null = null;
 }

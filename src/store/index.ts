@@ -4,6 +4,7 @@ import Albums from './modules/albums';
 import PhotosModule from './modules/photos';
 import RoadsModule from './modules/roads';
 import LocomotivesModule from './modules/locomotives';
+import UserModule from './modules/users';
 import UserModel from '@/models/User';
 import UserService from '@/services/user.service';
 
@@ -19,12 +20,14 @@ const logger = createLogger({
   logMutations: false
 });
 
+// TODO: Move current user to the userModule
+
 export default new Vuex.Store({
   state: {
     currentUser: null
   } as AppState,
   getters: {
-    currentUser: state => state.currentUser
+    currentUser: (state) => state.currentUser
   },
   mutations: {
     SET_CURRENT_USER(state, user: UserModel) {
@@ -43,7 +46,8 @@ export default new Vuex.Store({
     albums: Albums,
     photos: PhotosModule,
     roads: RoadsModule,
-    locomotives: LocomotivesModule
+    locomotives: LocomotivesModule,
+    users: UserModule
   },
   plugins: [
     logger,

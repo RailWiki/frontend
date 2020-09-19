@@ -11,6 +11,7 @@
             <b-nav-item to="/albums/mine">My Albums</b-nav-item>
             <b-nav-item :to="{name: 'roadsList'}">Railroads</b-nav-item>
             <b-nav-item :to="{name: 'locomotiveList'}">Locomotives</b-nav-item>
+            <b-nav-item :to="{name: 'userList'}">Users</b-nav-item>
           </template>
         </b-navbar-nav>
 
