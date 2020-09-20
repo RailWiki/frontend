@@ -15,7 +15,7 @@
             :fields="roadGridFields"
           >
             <template v-slot:cell(name)="data">
-              <router-link :to="{name: 'roadDetails', params: { slug: data.item.slug } }">{{ data.value }}</router-link>
+              <router-link :to="{name: 'roadDetails', params: { id: data.item.id } }">{{ data.value }}</router-link>
             </template>
 
           </b-table>

@@ -21,6 +21,13 @@ const roadService = {
     });
   },
 
+  async getById(id: number): Promise<RoadModel> {
+    return ApiService.get(`roads/${id}`).then((response: AxiosResponse) => {
+      const road = new RoadModel(response.data);
+      return road;
+    });
+  },
+
   async getRoadTypes(): Promise<RoadTypeModel[]> {
     return ApiService.get('road-types').then((response: AxiosResponse) => {
       const types = response.data.map((x: any) => new RoadTypeModel(x));

@@ -96,12 +96,22 @@ export default class RoadModule extends VuexModule {
 
   @Action
   public async loadRoads(filter?: FilterRoadsModel) {
+    this.context.commit('_setIsRoadsLoading', true);
     // const filter = this._roadsFilter;
 
     // filter.typeId = this._currentRoadType ? this._currentRoadType.id : null;
 
     return roadService.getRoads(filter).then((roads: PaginatedModel<RoadModel>) => {
       this.context.commit('_setRoads', roads);
+      this.context.commit('_setIsRoadsLoading', false);
+    });
+  }
+
+  @Action({rawError: true })
+  public async loadRoad(id: number) {
+    this.context.commit('_setIsRoadsLoading', true);
+    return roadService.getById(id).then((road: RoadModel) => {
+      this.context.commit('_setCurrentRoad', road);
       this.context.commit('_setIsRoadsLoading', false);
     });
   }

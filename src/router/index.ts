@@ -78,7 +78,8 @@ const routes: RouteConfig[] = [
     component: GenericRouterView,
     children: [
       { path: ':typeSlug?', name: 'roadsList', component: RoadsList },
-      { path: 'details/:slug', name: 'roadDetails', component: RoadDetails },
+      { path: 'view/:id', name: 'roadDetails', component: RoadDetails },
+      // { path: 'details/:slug', name: 'roadDetails', component: RoadDetails },
     ]
   },
   {
