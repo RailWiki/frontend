@@ -13,9 +13,6 @@ export default class LocomotiveModule extends VuexModule {
   _locomotives: PaginatedModel<LocomotiveModel> = new PaginatedModel<LocomotiveModel>();
   _filters: FilterLocomotivesModel = new FilterLocomotivesModel();
 
-  // Not sure how I feel about loco photos being in here
-  _locomotivePhotos: PhotoModel[] = new Array<PhotoModel>();
-
   get isLoading(): boolean {
     return this._isLoading;
   }
@@ -30,10 +27,6 @@ export default class LocomotiveModule extends VuexModule {
 
   get filters(): FilterLocomotivesModel {
     return this._filters;
-  }
-
-  get locomotivePhotos(): PhotoModel[] {
-    return this._locomotivePhotos;
   }
 
   @Mutation
@@ -54,11 +47,6 @@ export default class LocomotiveModule extends VuexModule {
   @Mutation
   _setFilters(filter: FilterLocomotivesModel) {
     this._filters = filter;
-  }
-
-  @Mutation
-  _setLocomotivePhotos(photos: PhotoModel[]) {
-    this._locomotivePhotos = photos;
   }
 
   @Action
@@ -89,12 +77,9 @@ export default class LocomotiveModule extends VuexModule {
   }
 
   @Action
-  public async loadLocomotivePhotos(id: number) {
-    this.context.commit('_setIsLoading', true);
+  public async clearFilters() {
+    this.context.commit('_setFilters', new FilterLocomotivesModel());
 
-    return LocomotiveService.getPhotosForLocomotive(id).then((photos: PhotoModel[]) => {
-      this.context.commit('_setLocomotivePhotos', photos);
-      this.context.commit('_setIsLoading', false);
-    });
+    await this.context.dispatch('loadLocomotives');
   }
 }

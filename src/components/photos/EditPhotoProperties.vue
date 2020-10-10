@@ -45,6 +45,10 @@
         />
       </b-form-group>
 
+      <b-form-group label="Locomotives" label-for="thing">
+        <locomotive-selector :selectedLocos="locomotives" />
+      </b-form-group>
+
       <b-button type="submit" variant="primary" :disabled="isSaving">
         Save Photo
         <b-spinner small v-if="isSaving" class="ml-2"></b-spinner>
@@ -52,32 +56,48 @@
     </b-form>
   </div>
 </template>
-
 <script>
-
+import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
-import PhotoModel from '@/models/photos/Photo'
+import PhotoModel from '@/models/photos/Photo';
+import { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
+import LocomotiveSelector from '@/components/locomotives/LocomotiveSelector.vue';
 
 export default {
   props: {
     photo: {
       type: PhotoModel
+    },
+    locomotives: {
+      type: Array
     }
   },
-
+  components: {
+    LocomotiveSelector
+  },
+  data() {
+    return {
+      selectedLocomotives: []
+    }
+  },
   computed: {
     ...mapGetters('photos', [
       'isSaving',
       'editingError'
-    ])
+    ]),
   },
-
   methods: {
     ...mapActions('photos', [
       'updatePhoto'
     ]),
+    ...mapActions('locomotivePhotos', {
+      updatePhotoLocomotives: 'update'
+    }),
     async savePhoto() {
       await this.updatePhoto(this.photo);
+
+      const locoIds = this.locomotives.map(x => x.id);
+      await this.updatePhotoLocomotives({ photoId: this.photo.id, locoIds });
     }
   }
 }

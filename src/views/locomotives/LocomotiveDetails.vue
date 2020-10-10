@@ -16,15 +16,15 @@
       </ul>
 
       <div class="photo-header d-flex justify-content-between">
-        <h3>{{ locomotivePhotos.length }} Photos</h3>
+        <h3>{{ photos.length }} Photos</h3>
 
         <div class="options">
           <view-mode-selector :viewMode="viewMode" @viewChanged="viewChanged" />
         </div>
       </div>
 
-      <grid-view v-if="viewMode === 'grid'" :photos="locomotivePhotos" :showAuthor="true" :showLocation="true" />
-      <list-view v-if="viewMode === 'list'" :photos="locomotivePhotos" :showAuthor="true" :showLocation="true" />
+      <grid-view v-if="viewMode === 'grid'" :photos="photos" :showAuthor="true" :showLocation="true" />
+      <list-view v-if="viewMode === 'list'" :photos="photos" :showAuthor="true" :showLocation="true" />
     </template>
   </div>
 </template>
@@ -50,7 +50,9 @@ export default {
     ...mapGetters('locomotives', [
       'isLoading',
       'locomotive',
-      'locomotivePhotos'
+    ]),
+    ...mapGetters('locomotivePhotos', [
+      'photos'
     ])
   },
   async created() {
@@ -62,6 +64,8 @@ export default {
   methods: {
     ...mapActions('locomotives', [
       'loadLocomotive',
+    ]),
+    ...mapActions('locomotivePhotos', [
       'loadLocomotivePhotos'
     ]),
 

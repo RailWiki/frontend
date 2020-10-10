@@ -27,15 +27,6 @@ const locomotiveService = {
       pagedResponse.data = response.data.map((x: any) => new LocomotiveModel(x));
       return pagedResponse;
     });
-  },
-
-  async getPhotosForLocomotive(locoId: number): Promise<PhotoModel[]> {
-    const url = `locomotives/${locoId}/photos`;
-
-    return ApiService.get(url).then((response: AxiosResponse) => {
-      const photos = response.data.map((x: any) => new PhotoModel(x));
-      return photos;
-    });
   }
 };
 

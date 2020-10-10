@@ -5,7 +5,10 @@
     </template>
 
     <template v-else>
-      <h1>{{ currentPhoto.title }}</h1>
+      <div class="header d-flex justify-content-between">
+        <h1>{{ currentPhoto.title }}</h1>
+      </div>
+
 
       <ul class="photo-properties list-inline">
         <li class="list-inline-item">
@@ -16,8 +19,8 @@
           <b>Author</b> {{ currentPhoto.author }}
         </li>
 
-        <li class="list-inline-item">
-          <b>Location</b> {{ currentPhoto.locationName }}
+        <li class="list-inline-item" v-if="currentPhoto.location">
+          <b>Location</b> {{ currentPhoto.location.name }}
         </li>
 
         <li class="list-inline-item">
@@ -29,7 +32,7 @@
         </li>
       </ul>
 
-      <div class="actions mb-2" v-if="currentUser && currentPhoto.userId === currentUser.id">
+      <div class="actions mb-2">
         <b-button variant="outline-secondary" v-b-toggle.sidebar-editing>Edit Properties</b-button>
       </div>
 
@@ -37,7 +40,7 @@
 
       <b-sidebar id="sidebar-editing" title="Edit Photo" right shadow>
         <div class="px-3 py-2">
-          <edit-photo-properties :photo="currentPhoto" />
+          <edit-photo-properties :photo="currentPhoto" :locomotives="locomotives" />
         </div>
       </b-sidebar>
     </template>
@@ -46,7 +49,7 @@
 
 <script>
 import { mapFields } from 'vuex-map-fields'
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import EditPhotoProperties from '@/components/photos/EditPhotoProperties.vue';
 
 export default {
@@ -67,7 +70,13 @@ export default {
     ...mapGetters('photos', [
       'isLoading',
       'currentPhoto'
-    ])
+    ]),
+    ...mapGetters('locomotivePhotos', {
+      photoLocomotives: 'locomotives'
+    }),
+    locomotives: function () {
+      return this.photoLocomotives.map(x => x.locomotive);
+    }
   },
 
   async created() {
@@ -75,12 +84,18 @@ export default {
   },
 
   methods: {
+    ...mapActions('locomotivePhotos', [
+      'loadPhotoLocomotives'
+    ]),
+
     async refresh() {
       const photoId = parseInt(this.$route.params.photoId);
 
       await this.$store.dispatch('photos/loadPhoto', photoId).then(() => {
         // nothing else to do
       })
+
+      await this.loadPhotoLocomotives(photoId);
     }
   }
 }
