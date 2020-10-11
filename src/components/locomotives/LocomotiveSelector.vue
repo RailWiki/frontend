@@ -5,77 +5,59 @@
     </b-badge>
 
     <b-modal id="modal-edit-locomotives"
-      :title="`Edit Locomotives (${selectedLocos.length})`"
+      title="Edit Photo Locomotives"
+      :no-close-on-backdrop="true"
       @shown="editModalShown"
       @ok="locomotivesUpdated"
       @hidden="editModalHidden">
 
-      <b-form-group label="Add a locomotive" label-for="locomotiveSelect"
-        description="Search for a locomotive to add to this photo">
-
-        <!-- Don't love the way this is behaving...
-              would like to clear the option after selected -->
-        <multiselect
-          id="locomotiveSelect"
-          v-model="selectLocomotive"
-          :options="locomotiveOptions"
-          label="roadNumber"
-          track-by="roadNumber"
-          @search-change="filterLocomotives"
-          @select="locomotiveSelected"
-          :internal-search="false"
-        />
-      </b-form-group>
-
-      <h6>Selected Locomotives</h6>
-
-      <b-table-simple small hover>
-        <b-thead head-variant="light">
-          <b-tr>
-            <b-th></b-th>
-            <b-th>Road Number</b-th>
-            <b-th>Model</b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="locomotive in locomotives" :key="locomotive.id">
-            <b-td>
-              <b-button type="button" size="sm" variant="link" @click="removeLocomotive(locomotive)" class="text-danger" style="padding: 0">Remove</b-button>
-            </b-td>
-            <b-td>
-              {{ locomotive.roadNumber }}
-            </b-td>
-            <b-td>
-              {{ locomotive.modelNumber }}
-            </b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
-
-      <b-form-checkbox-group v-model="selectedLocomotiveIds">
-        <b-table-simple small hover v-if="query && locomotives && locomotives.data.length > 0">
-          <b-thead head-variant="light">
-            <b-tr>
-              <b-th>Selected</b-th>
-              <b-th>Road Number</b-th>
-              <b-th>Model</b-th>
-            </b-tr>
-          </b-thead>
-          <b-tbody>
-            <b-tr v-for="locomotive in locomotives.data" :key="locomotive.id">
-              <b-td>
-                <b-form-checkbox :value="locomotive.id" />
-              </b-td>
-              <b-td>
-                {{ locomotive.roadNumber }}
-              </b-td>
-              <b-td>
-                {{ locomotive.modelNumber }}
-              </b-td>
-            </b-tr>
-          </b-tbody>
-        </b-table-simple>
-      </b-form-checkbox-group>
+      <b-tabs content-class="mt-3" justified>
+        <b-tab :title="`Selected (${locomotives.length})`" active>
+          <b-table-simple small hover>
+            <b-thead head-variant="light">
+              <b-tr>
+                <b-th></b-th>
+                <b-th>Road Number</b-th>
+                <b-th>Model</b-th>
+              </b-tr>
+            </b-thead>
+            <b-tbody>
+              <b-tr v-for="locomotive in locomotives" :key="locomotive.id">
+                <b-td>
+                  <b-button type="button" size="sm" variant="link" @click="removeLocomotive(locomotive)" class="text-danger" style="padding: 0">Remove</b-button>
+                </b-td>
+                <b-td>
+                  {{ locomotive.roadNumber }}
+                </b-td>
+                <b-td>
+                  {{ locomotive.modelNumber }}
+                </b-td>
+              </b-tr>
+            </b-tbody>
+          </b-table-simple>
+        </b-tab>
+        <b-tab title="Search">
+          <b-form-group label="Search for locomotive" label-tag="h5" label-for="locomotiveSelect"
+            description="Search for a locomotive to tag in this photo. Selecting the entry will add it to the photo.">
+            <!-- Don't love the way this is behaving...
+                  would like to clear the option after selected -->
+            <multiselect
+              id="locomotiveSelect"
+              v-model="selectLocomotive"
+              :options="locomotiveOptions"
+              label="roadNumber"
+              track-by="roadNumber"
+              @search-change="filterLocomotives"
+              @select="locomotiveSelected"
+              :internal-search="false"
+              placeholder="Search for a locomotive by its road number (ie UP 1234)"
+            />
+          </b-form-group>
+        </b-tab>
+        <b-tab title="Add New">
+          TODO Add Locomotive
+        </b-tab>
+      </b-tabs>
     </b-modal>
   </div>
 </template>
