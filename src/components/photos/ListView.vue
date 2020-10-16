@@ -11,16 +11,31 @@
         </router-link>
       </div>
       <div class="details">
-        <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }" :title="photo.title">
-          {{ photo.title | truncate(50) }}
-        </router-link>
+        <dl class="row">
+          <!-- TODO: On mobile, drop details below photo and full-width -->
 
-        <div v-if="showAuthor && photo.userName">
-          <b>Author</b> {{ photo.userName }}
-        </div>
-        <div v-if="showLocation && photo.location">
-          <b>Location</b> {{ photo.location.name }}
-        </div>
+          <dt class="col-md-3">Title</dt>
+          <dd class="col-md-9">
+            <router-link :to="{name: 'viewPhoto', params: { photoId: photo.id } }" :title="photo.title">
+              {{ photo.title | truncate(50) }}
+            </router-link>
+          </dd>
+
+          <template v-if="showAuthor && photo.userName">
+            <dt class="col-md-3">Author</dt>
+            <dd class="col-md-9">{{ photo.userName }}</dd>
+          </template>
+
+          <template v-if="showLocation && photo.location">
+            <dt class="col-md-3">Location</dt>
+            <dd class="col-md-9">{{ photo.location.name }}</dd>
+          </template>
+
+          <dt class="col-md-3">Taken On</dt>
+          <dd class="col-md-9">
+            {{ photo.photoDate | moment('YYYY-MM-DD') }}
+          </dd>
+        </dl>
       </div>
     </div>
   </div>
@@ -54,10 +69,10 @@ export default {
   .photo {
     &.xs {
       .image {
-        flex: 0 0 110px;
+        flex: 0 0 185px;
 
         img {
-          max-width: 125px;
+          max-width: 175px;
         }
       }
     }
