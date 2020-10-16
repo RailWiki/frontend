@@ -38,7 +38,7 @@
 
       <img :src="currentPhoto.files.large" :alt="currentPhoto.title" :title="currentPhoto.title" />
 
-      <b-sidebar id="sidebar-editing" title="Edit Photo" right shadow>
+      <b-sidebar id="sidebar-editing" title="Edit Photo" right shadow lazy>
         <div class="px-3 py-2">
           <edit-photo-properties :photo="currentPhoto" :locomotives="locomotives" />
         </div>

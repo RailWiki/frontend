@@ -13,6 +13,9 @@ export default class LocomotivePhotoModel {
   constructor(data?: any) {
     if (data) {
       Object.assign(this, data);
+
+      this.photo = new PhotoModel(data.photo);
+      this.locomotive = new LocomotiveModel(data.locomotive);
     }
   }
 }

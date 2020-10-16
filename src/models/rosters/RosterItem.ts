@@ -7,6 +7,7 @@ export default class RosterItemModel {
   public road: RoadModel | null = null;
 
   public roadNumber: string = '';
+  public reportingMarks: string = '';
 
   public notes: string | null = null;
   public slug: string = '';

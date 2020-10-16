@@ -27,6 +27,12 @@ const locomotiveService = {
       pagedResponse.data = response.data.map((x: any) => new LocomotiveModel(x));
       return pagedResponse;
     });
+  },
+
+  async create(locomotive: LocomotiveModel): Promise<LocomotiveModel> {
+    return ApiService.post('locomotives', locomotive).then((response: AxiosResponse) => {
+      return new LocomotiveModel(response.data);
+    });
   }
 };
 

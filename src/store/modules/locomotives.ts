@@ -82,4 +82,16 @@ export default class LocomotiveModule extends VuexModule {
 
     await this.context.dispatch('loadLocomotives');
   }
+
+  @Action
+  public async addLocomotive(locomotive: LocomotiveModel) {
+    this.context.commit('_setIsLoading', true);
+
+    return LocomotiveService.create(locomotive).then((newLoco: LocomotiveModel) => {
+      this.context.commit('_setIsLoading', false);
+      // TODO: add to locos in state
+
+      return newLoco;
+    });
+  }
 }

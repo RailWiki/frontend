@@ -4,6 +4,7 @@ import Albums from './modules/albums';
 import PhotosModule from './modules/photos';
 import RoadsModule from './modules/roads';
 import LocomotivesModule from './modules/locomotives';
+import LocomotiveTypesModule from './modules/locomotiveTypes';
 import LocomotivePhotosModule from './modules/locomotivePhotos';
 import UserModule from './modules/users';
 import UserModel from '@/models/User';
@@ -48,6 +49,7 @@ export default new Vuex.Store({
     photos: PhotosModule,
     roads: RoadsModule,
     locomotives: LocomotivesModule,
+    locomotiveTypes: LocomotiveTypesModule,
     locomotivePhotos: LocomotivePhotosModule,
     users: UserModule
   },
