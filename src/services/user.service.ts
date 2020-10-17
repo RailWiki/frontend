@@ -1,12 +1,21 @@
 import ApiService from './api.service';
 import RegisterUserModel from '../models/RegisterUser';
-import UserModel, { FilterUsersModel } from '@/models/User';
+import UserModel, { FilterUsersModel, UserStatsModel } from '@/models/User';
 import config from '../config';
 import { OktaAuth, OktaAuthOptions, IDToken, AccessToken } from '@okta/okta-auth-js';
 import PaginatedModel from '@/models/PaginatedModel';
 import { AxiosResponse } from 'axios';
 
 const userService = {
+  async getById(id: number): Promise<UserModel> {
+    const url = `users/${id}`;
+
+    return ApiService.get(url).then((response: AxiosResponse) => {
+      const user = new UserModel(response.data);
+      return user;
+    });
+  },
+
   async getUsers(filter?: FilterUsersModel): Promise<PaginatedModel<UserModel>> {
     let url = 'users';
 
@@ -60,6 +69,15 @@ const userService = {
             oktaAuth.tokenManager.add('idToken', tokenResponse.tokens.idToken as IDToken);
             oktaAuth.tokenManager.add('accessToken', tokenResponse.tokens.accessToken as AccessToken);
         });
+    });
+  },
+
+  async getUserStats(userId: number): Promise<UserStatsModel> {
+    const url = `users/${userId}/stats`;
+
+    return ApiService.get(url).then((response: AxiosResponse) => {
+      const stats = new UserStatsModel(response.data);
+      return stats;
     });
   }
 };

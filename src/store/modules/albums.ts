@@ -3,6 +3,7 @@ import AlbumModel from '@/models/photos/Album';
 import PhotoModel from '@/models/photos/Photo';
 import AlbumService from '@/services/albumService';
 import PhotoService from '@/services/photoService';
+import albumService from '@/services/albumService';
 
 // TODO: Move photo things to the photo module
 
@@ -83,6 +84,15 @@ const actions = {
   async loadCurrentUserAlbums({ commit }) {
     const albums = await AlbumService.getCurrentUserAlbums();
     commit('SET_USER_ALBUMS', albums);
+  },
+
+  async loadUserAlbums({ commit }, userId: number) {
+    commit('SET_IS_LOADING', true);
+
+    return AlbumService.getUserAlbums(userId).then((albums: AlbumModel[]) => {
+      commit('SET_USER_ALBUMS', albums);
+      commit('SET_IS_LOADING', false);
+    });
   },
 
   async loadAlbum({ commit }, albumId: number) {

@@ -7,14 +7,27 @@
     <template v-if="!isLoading">
       <h1>{{ album.title }}</h1>
 
-      <div class="actions my-2">
+      <div class="d-flex justify-content-between">
+        <h5>
+          By
+          <router-link :to="{ name: 'userProfile', params: { userId: album.userId } }">
+            {{ album.user.fullName }}
+          </router-link>
+        </h5>
+
+        <div class="album-info">
+          <h5>{{ albumPhotos.length }} photos</h5>
+          <!-- TODO: Add date range of photos -->
+        </div>
+      </div>
+
+      <div class="actions my-2" v-if="canEdit">
         <b-button variant="secondary" @click='editAlbum(album)'>Edit</b-button>
       </div>
 
-      <!-- TODO: Only show for album owner -->
-      <photo-uploader :albumId="album.id" class="mb-2" />
+      <photo-uploader v-if="canEdit" :albumId="album.id" class="mb-2" />
 
-      <grid-view :photos="albumPhotos" />
+      <grid-view :photos="albumPhotos" class="mt-4" />
 
     </template>
 
@@ -26,7 +39,7 @@
 
 <script>
 import { mapFields } from 'vuex-map-fields';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import EditAblum from './EditAlbum.vue';
 import AlbumModel from '../../models/photos/Album';
 
@@ -61,9 +74,12 @@ export default {
       'editing.isEditing',
       'albumPhotos'
     ]),
-    // ...mapFields([
-    //   'currentUser'
-    // ]),
+    ...mapGetters([
+      'currentUser'
+    ]),
+    canEdit: function() {
+      return this.currentUser && this.currentUser.id === this.album.userId
+    }
   },
 
   methods: {
@@ -77,4 +93,3 @@ export default {
   }
 }
 </script>
-

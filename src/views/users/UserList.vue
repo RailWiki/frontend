@@ -16,11 +16,11 @@
             <div class="row row-cols-1 row-cols-md-3">
               <div class="col mb-4" v-for="user in users.data" :key="user.id">
                 <div class="card">
-                  <router-link :to="{name: 'userDetails', params: { userId: user.id } }">
+                  <router-link :to="{name: 'userProfile', params: { userId: user.id } }">
                     <img src="https://via.placeholder.com/150" class="card-img-top" :alt="user.fullName" />
                   </router-link>
                   <div class="card-body">
-                    <router-link :to="{name: 'userDetails', params: { userId: user.id } }">
+                    <router-link :to="{name: 'userProfile', params: { userId: user.id } }">
                       {{ user.fullName }}
                     </router-link>
                   </div>
@@ -53,5 +53,5 @@ export default {
       'loadUsers'
     ])
   }
-}
+};
 </script>

@@ -9,6 +9,7 @@ import Login from '../views/Auth/Login.vue';
 import Register from '../views/Auth/Register.vue';
 
 import UserList from '../views/users/UserList.vue';
+import UserProfile from '../views/users/Profile.vue';
 
 import Albums from '../views/albums/Albums.vue';
 import MyAlbumList from '../views/albums/MyAlbumList.vue';
@@ -51,7 +52,7 @@ const routes: RouteConfig[] = [
     component: GenericRouterView,
     children: [
       { path: '', name: 'userList', component: UserList },
-      { path: 'profile/:userId', name: 'userDetails', component: UserList }
+      { path: 'profile/:userId', name: 'userProfile', component: UserProfile }
     ]
   },
   {
