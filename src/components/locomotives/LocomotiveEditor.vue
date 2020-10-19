@@ -103,12 +103,12 @@
 
 <script>
 import _ from 'lodash';
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 import { FilterRoadsModel } from '@/models/rosters/Road';
-import LocomotiveModel, { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
+import LocomotiveModel from '@/models/rosters/Locomotive';
 
 export default {
-  data () {
+  data() {
     return {
       error: null,
       locomotive: {
@@ -137,10 +137,10 @@ export default {
         { value: 11, text: 'November' },
         { value: 12, text: 'December' }
       ]
-    }
+    };
   },
   async created() {
-    await this.loadLocomotiveTypes()
+    await this.loadLocomotiveTypes();
   },
   computed: {
     ...mapGetters('roads', [
@@ -160,7 +160,7 @@ export default {
     ...mapActions('locomotiveTypes', [
       'loadLocomotiveTypes'
     ]),
-    filterRoads: _.debounce(async function (query) {
+    filterRoads: _.debounce(async function(query) {
       const filter = new FilterRoadsModel();
       filter.query = query;
       filter.pageSize = 100; // TODO: Figure out how to get pagination to work in MS
@@ -184,10 +184,10 @@ export default {
           : null
       });
 
-      this.addLocomotive(locomotive).then(locomotive => {
-        this.$emit('locomotiveSaved', locomotive);
+      this.addLocomotive(locomotive).then((locomotive) => {
+        this.$emit('locomotive-saved', locomotive);
       });
     }
   }
-}
+};
 </script>

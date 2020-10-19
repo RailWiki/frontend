@@ -3,7 +3,6 @@ import AlbumModel from '@/models/photos/Album';
 import PhotoModel from '@/models/photos/Photo';
 import AlbumService from '@/services/albumService';
 import PhotoService from '@/services/photoService';
-import albumService from '@/services/albumService';
 
 // TODO: Move photo things to the photo module
 
@@ -11,12 +10,12 @@ const state = {
   userAlbums: new Array<AlbumModel>(),
   isLoading: false,
   viewing: {
-    album: new AlbumModel(),
+    album: new AlbumModel()
   },
   editing: {
     isEditing: false,
     error: null,
-    album: new AlbumModel(),
+    album: new AlbumModel()
   },
 
   isUploading: false,
@@ -26,7 +25,7 @@ const state = {
 
 const getters = {
   getField,
-  userAlbums: (state: any) => state.userAlbums,
+  userAlbums: (state: any) => state.userAlbums
   // albumPhotos: (state: any) => state.albumPhotos
 };
 
@@ -67,7 +66,7 @@ const mutations = {
 
   ADD_PHOTOS_TO_ALBUM(state, photos) {
     state.albumPhotos = [...photos, ...state.albumPhotos];
-  },
+  }
 };
 
 const actions = {
@@ -121,17 +120,17 @@ const actions = {
           commit('SET_IS_EDITING', false);
           commit('SET_EDITING_ALBUM', new AlbumModel());
           commit('ADD_USER_ALBUM', newAlbum);
-        }).catch((err) => {
+        }).catch(() => {
           commit('SET_EDITING_ERROR', 'There was an error creating your album. Please try again.');
         });
     } else {
       AlbumService.update(state.editing.album)
-      .then(() => {
-        commit('SET_IS_EDITING', false);
-        commit('SET_EDITING_ALBUM', new AlbumModel());
-      }).catch(() => {
-        commit('SET_EDITING_ERROR', 'There was an error updating your album. Please try again.');
-      });
+        .then(() => {
+          commit('SET_IS_EDITING', false);
+          commit('SET_EDITING_ALBUM', new AlbumModel());
+        }).catch(() => {
+          commit('SET_EDITING_ERROR', 'There was an error updating your album. Please try again.');
+        });
     }
   },
 

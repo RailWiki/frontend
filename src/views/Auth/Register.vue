@@ -63,31 +63,30 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import RegisterUserModel from '../../models/RegisterUser';
 import UserService from '../../services/user.service';
 
 @Component({
   components: {
-  },
+  }
 })
 export default class Register extends Vue {
-  protected username: string = '';
-  protected password: string = '';
-  protected firstName: string = '';
-  protected lastName: string = '';
+  protected username = '';
+  protected password = '';
+  protected firstName = '';
+  protected lastName = '';
 
-  protected isSuccessful: boolean = false;
-  protected errorMessage: string = '';
+  protected isSuccessful = false;
+  protected errorMessage = '';
 
   protected async register() {
     const request = new RegisterUserModel(this.username, this.password, this.firstName, this.lastName);
     UserService.register(request).then(() => {
       this.isSuccessful = true;
-    }).catch((err) => {
+    }).catch(() => {
       this.errorMessage = 'There was an error creating your account. Please try again.';
     });
-
   }
 }
 </script>

@@ -34,8 +34,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import RoadService from '@/services/roadService';
-import RoadTypeList from '@/components/roads/RoadTypeList.vue'
+import RoadTypeList from '@/components/roads/RoadTypeList.vue';
 import { FilterRoadsModel } from '@/models/rosters/Road';
 
 export default {
@@ -51,7 +50,7 @@ export default {
         { key: 'locomotiveCount', label: 'Locomotives' },
         { key: 'rollingStockCount', label: 'Rolling Stock' }
       ]
-    }
+    };
   },
   async created() {
     await this.load();
@@ -65,14 +64,14 @@ export default {
       'currentRoadType',
       'roads'
     ]),
-    totalRecords: function() {
+    totalRecords() {
       return this.roads ? this.roads.total : 0;
     },
-    pageSize: function() {
+    pageSize() {
       return this.roads ? this.roads.pageSize : 0;
     },
-    pageCount: function() {
-      return this.roads ? parseInt(this.roads.pageCount) : 0
+    pageCount() {
+      return this.roads ? parseInt(this.roads.pageCount) : 0;
     }
   },
   methods: {
@@ -95,8 +94,8 @@ export default {
       this.currentPage = page;
     },
     pagedLinkGen(pageNum) {
-      return { name: 'roadsList', params: {...this.$route.params }, query: { page: pageNum } }
+      return { name: 'roadsList', params: { ...this.$route.params }, query: { page: pageNum } };
     }
   }
-}
+};
 </script>

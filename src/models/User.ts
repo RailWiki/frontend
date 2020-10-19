@@ -1,11 +1,11 @@
 import FilterModel from './FilterModel';
 
 export default class UserModel {
-  public id: number = 0;
-  public email: string = '';
-  public firstName: string = '';
-  public lastName: string = '';
-  public fullName: string = '';
+  public id = 0;
+  public email = '';
+  public firstName = '';
+  public lastName = '';
+  public fullName = '';
 
   constructor(data: any) {
     Object.assign(this, data);
@@ -17,13 +17,13 @@ export class FilterUsersModel extends FilterModel {
 }
 
 export class UserStatsModel {
-  public userId: number = 0;
-  public userName: string = '';
+  public userId = 0;
+  public userName = '';
 
-  public photoCount: number = 0;
-  public locomotiveCount: number = 0;
-  public rollingStockCount: number = 0;
-  public locationCount: number = 0;
+  public photoCount = 0;
+  public locomotiveCount = 0;
+  public rollingStockCount = 0;
+  public locationCount = 0;
 
   constructor(data: any) {
     Object.assign(this, data);

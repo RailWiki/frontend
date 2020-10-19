@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       mode: this.viewMode
-    }
+    };
   },
   methods: {
     setViewMode(mode) {
@@ -26,5 +26,5 @@ export default {
       this.$emit('viewChanged', mode);
     }
   }
-}
+};
 </script>

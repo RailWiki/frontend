@@ -9,7 +9,6 @@
         <h1>{{ currentPhoto.title }}</h1>
       </div>
 
-
       <ul class="photo-properties list-inline">
         <li class="list-inline-item">
           <b>Taken on</b> {{ currentPhoto.photoDate | moment('YYYY-MM-DD') }}
@@ -48,7 +47,6 @@
 </template>
 
 <script>
-import { mapFields } from 'vuex-map-fields'
 import { mapActions, mapGetters } from 'vuex';
 import EditPhotoProperties from '@/components/photos/EditPhotoProperties.vue';
 
@@ -60,7 +58,7 @@ export default {
   data() {
     return {
 
-    }
+    };
   },
 
   computed: {
@@ -74,8 +72,8 @@ export default {
     ...mapGetters('locomotivePhotos', {
       photoLocomotives: 'locomotives'
     }),
-    locomotives: function () {
-      return this.photoLocomotives.map(x => x.locomotive);
+    locomotives() {
+      return this.photoLocomotives.map((x) => x.locomotive);
     }
   },
 
@@ -93,12 +91,12 @@ export default {
 
       await this.$store.dispatch('photos/loadPhoto', photoId).then(() => {
         // nothing else to do
-      })
+      });
 
       await this.loadPhotoLocomotives(photoId);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

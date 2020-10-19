@@ -4,16 +4,16 @@ import RoadTypeModel from '@/models/rosters/RoadType';
 import roadService from '@/services/roadService';
 import PaginatedModel from '@/models/PaginatedModel';
 
-@Module({namespaced: true})
+@Module({ namespaced: true })
 export default class RoadModule extends VuexModule {
-  _isRoadsLoading: boolean = false;
+  private _isRoadsLoading = false;
 
-  _currentRoadType: RoadTypeModel | null = null;
-  _roadTypes: RoadTypeModel[] = new Array<RoadTypeModel>();
+  private _currentRoadType: RoadTypeModel | null = null;
+  private _roadTypes: RoadTypeModel[] = new Array<RoadTypeModel>();
 
-  _currentRoad: RoadModel | null = null;
-  _roads: PaginatedModel<RoadModel> = new PaginatedModel<RoadModel>();
-  _roadsFilter: FilterRoadsModel = new FilterRoadsModel();
+  private _currentRoad: RoadModel | null = null;
+  private _roads: PaginatedModel<RoadModel> = new PaginatedModel<RoadModel>();
+  private _roadsFilter: FilterRoadsModel = new FilterRoadsModel();
 
   get isRoadsLoading(): boolean {
     return this._isRoadsLoading;
@@ -40,32 +40,32 @@ export default class RoadModule extends VuexModule {
   }
 
   @Mutation
-  _setIsRoadsLoading(loading: boolean) {
+  private _setIsRoadsLoading(loading: boolean) {
     this._isRoadsLoading = loading;
   }
 
   @Mutation
-  _setCurrentRoadType(type: RoadTypeModel | null) {
+  private _setCurrentRoadType(type: RoadTypeModel | null) {
     this._currentRoadType = type;
   }
 
   @Mutation
-  _setRoadTypes(types: RoadTypeModel[]) {
+  private _setRoadTypes(types: RoadTypeModel[]) {
     this._roadTypes = types;
   }
 
   @Mutation
-  _setCurrentRoad(road: RoadModel | null) {
+  private _setCurrentRoad(road: RoadModel | null) {
     this._currentRoad = road;
   }
 
   @Mutation
-  _setRoads(roads: PaginatedModel<RoadModel>) {
+  private _setRoads(roads: PaginatedModel<RoadModel>) {
     this._roads = roads;
   }
 
   @Mutation
-  _setRoadsFilter(filter: FilterRoadsModel) {
+  private _setRoadsFilter(filter: FilterRoadsModel) {
     this._roadsFilter = filter;
   }
 
@@ -107,7 +107,7 @@ export default class RoadModule extends VuexModule {
     });
   }
 
-  @Action({rawError: true })
+  @Action({ rawError: true })
   public async loadRoad(id: number) {
     this.context.commit('_setIsRoadsLoading', true);
     return roadService.getById(id).then((road: RoadModel) => {

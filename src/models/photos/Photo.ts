@@ -1,11 +1,10 @@
 import AlbumModel from './Album';
-import UserModel from '../User';
 
 export class PhotoFilesModel {
-  public original: string = '';
-  public small: string = '';
-  public medium: string = '';
-  public large: string = '';
+  public original = '';
+  public small = '';
+  public medium = '';
+  public large = '';
 
   constructor(data?: any) {
     if (data) {
@@ -15,20 +14,20 @@ export class PhotoFilesModel {
 }
 
 export default class PhotoModel {
-  public id: number = 0;
-  public albumId: number = 0;
+  public id = 0;
+  public albumId = 0;
   public album: AlbumModel | null = null;
-  public userId: number = 0;
+  public userId = 0;
   public userName: string | null = null;
-  public author: string = '';
+  public author = '';
   public locationName?: string;
   public locationId?: number;
-  public title: string = '';
+  public title = '';
   public description?: string;
-  public filename: string = '';
-  public photoDate: string = '';
-  public uploadDate: string = '';
-  public viewCount: number = 0;
+  public filename = '';
+  public photoDate = '';
+  public uploadDate = '';
+  public viewCount = 0;
   public files: PhotoFilesModel = new PhotoFilesModel();
 
   constructor(data?: any) {

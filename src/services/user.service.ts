@@ -2,7 +2,7 @@ import ApiService from './api.service';
 import RegisterUserModel from '../models/RegisterUser';
 import UserModel, { FilterUsersModel, UserStatsModel } from '@/models/User';
 import config from '../config';
-import { OktaAuth, OktaAuthOptions, IDToken, AccessToken } from '@okta/okta-auth-js';
+import { OktaAuth, IDToken, AccessToken } from '@okta/okta-auth-js';
 import PaginatedModel from '@/models/PaginatedModel';
 import { AxiosResponse } from 'axios';
 
@@ -58,17 +58,17 @@ const userService = {
     const oktaAuth = new OktaAuth(opts);
 
     return oktaAuth.signIn({
-        username,
-        password
+      username,
+      password
     }).then((signInResponse) => {
-        oktaAuth.token.getWithoutPrompt({
-            responseType: 'id_token',
-            sessionToken: signInResponse.sessionToken,
-            scopes: config.auth.scopes
-        }).then((tokenResponse) => {
-            oktaAuth.tokenManager.add('idToken', tokenResponse.tokens.idToken as IDToken);
-            oktaAuth.tokenManager.add('accessToken', tokenResponse.tokens.accessToken as AccessToken);
-        });
+      oktaAuth.token.getWithoutPrompt({
+        responseType: 'id_token',
+        sessionToken: signInResponse.sessionToken,
+        scopes: config.auth.scopes
+      }).then((tokenResponse) => {
+        oktaAuth.tokenManager.add('idToken', tokenResponse.tokens.idToken as IDToken);
+        oktaAuth.tokenManager.add('accessToken', tokenResponse.tokens.accessToken as AccessToken);
+      });
     });
   },
 

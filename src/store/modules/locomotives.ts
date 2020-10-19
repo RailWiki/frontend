@@ -2,16 +2,15 @@ import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
 import LocomotiveModel, { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
 import LocomotiveService from '@/services/locomotiveService';
 import PaginatedModel from '@/models/PaginatedModel';
-import PhotoModel from '@/models/photos/Photo';
 
-@Module({namespaced: true})
+@Module({ namespaced: true })
 export default class LocomotiveModule extends VuexModule {
-  _isLoading: boolean = true;
+  private _isLoading = true;
 
-  _locomotive: LocomotiveModel | null = null;
+  private _locomotive: LocomotiveModel | null = null;
 
-  _locomotives: PaginatedModel<LocomotiveModel> = new PaginatedModel<LocomotiveModel>();
-  _filters: FilterLocomotivesModel = new FilterLocomotivesModel();
+  private _locomotives: PaginatedModel<LocomotiveModel> = new PaginatedModel<LocomotiveModel>();
+  private _filters: FilterLocomotivesModel = new FilterLocomotivesModel();
 
   get isLoading(): boolean {
     return this._isLoading;
@@ -30,22 +29,22 @@ export default class LocomotiveModule extends VuexModule {
   }
 
   @Mutation
-  _setIsLoading(loading: boolean) {
+  private _setIsLoading(loading: boolean) {
     this._isLoading = loading;
   }
 
   @Mutation
-  _setLocomotive(locomotive: LocomotiveModel | null) {
+  private _setLocomotive(locomotive: LocomotiveModel | null) {
     this._locomotive = locomotive;
   }
 
   @Mutation
-  _setLocomotives(locomotives: PaginatedModel<LocomotiveModel>) {
+  private _setLocomotives(locomotives: PaginatedModel<LocomotiveModel>) {
     this._locomotives = locomotives;
   }
 
   @Mutation
-  _setFilters(filter: FilterLocomotivesModel) {
+  private _setFilters(filter: FilterLocomotivesModel) {
     this._filters = filter;
   }
 
@@ -63,11 +62,11 @@ export default class LocomotiveModule extends VuexModule {
   public async loadLocomotives() {
     this.context.commit('_setIsLoading', true);
 
-    return LocomotiveService.getLocomotives(this.context.getters.filters).then((locomotives: PaginatedModel<LocomotiveModel>) => {
-      this.context.commit('_setLocomotives', locomotives);
-      this.context.commit('_setIsLoading', false);
-
-    });
+    return LocomotiveService.getLocomotives(this.context.getters.filters)
+      .then((locomotives: PaginatedModel<LocomotiveModel>) => {
+        this.context.commit('_setLocomotives', locomotives);
+        this.context.commit('_setIsLoading', false);
+      });
   }
 
   @Action

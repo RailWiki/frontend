@@ -1,12 +1,11 @@
 import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
 import PaginatedModel from '@/models/PaginatedModel';
 import UserModel, { FilterUsersModel, UserStatsModel } from '@/models/User';
-import { TableSimplePlugin } from 'bootstrap-vue';
 import userService from '@/services/user.service';
 
-@Module({namespaced: true })
+@Module({ namespaced: true })
 export default class UserModule extends VuexModule {
-  public _isLoading: boolean = false;
+  public _isLoading = false;
 
   public _user: UserModel | null = null;
   public _userStats: UserStatsModel | null = null;

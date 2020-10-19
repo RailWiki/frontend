@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import _ from'lodash';
+import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
-import RoadModel, { FilterRoadsModel } from '@/models/rosters/Road';
+import { FilterRoadsModel } from '@/models/rosters/Road';
 import { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
 
 export default {
@@ -76,34 +76,35 @@ export default {
       roadNumber: null,
       modelNumber: null,
       serialNumber: null
-    }
+    };
   },
   async created() {
     this.loadRoadTypes();
-    this.loadRoads()
+    this.loadRoads();
   },
   computed: {
     ...mapGetters('roads', [
       'roadTypes',
       'roads'
     ]),
-    roadTypeOptions: function() {
-      return this.roadTypes.sort((a, b) => {
-        return a.displayOrder > b.displayOrder
+    roadTypeOptions() {
+      const roadTypes = this.roadtypes;
+      return roadTypes.sort((a, b) => {
+        return a.displayOrder > b.displayOrder;
       }).map((x) => {
-        return { value: x.id, text: x.name }
+        return { value: x.id, text: x.name };
       });
     },
-    roadOptions: function() {
+    roadOptions() {
       return this.roads.data.map((x) => {
-        return { value: x.id, text: `${x.name} - ${x.reportingMarks}` }
+        return { value: x.id, text: `${x.name} - ${x.reportingMarks}` };
       });
     }
   },
   methods: {
     ...mapActions('roads', [
       'loadRoadTypes',
-      'loadRoads',
+      'loadRoads'
     ]),
     ...mapActions('roads', {
       searchRoads: 'search'
@@ -111,8 +112,8 @@ export default {
     ...mapActions('locomotives', [
       'search'
     ]),
-    filterRoads: _.debounce(async function (query) {
-      var filter = new FilterRoadsModel();
+    filterRoads: _.debounce(async function(query) {
+      const filter = new FilterRoadsModel();
       filter.query = query;
       filter.pageSize = 100;
       await this.loadRoads(filter);
@@ -130,7 +131,7 @@ export default {
       await this.search(filter);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

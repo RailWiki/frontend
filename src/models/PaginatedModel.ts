@@ -1,16 +1,15 @@
 import { AxiosResponse } from 'axios';
 
 export default class PaginatedModel<TModel> {
-
   public data: TModel[] = new Array<TModel>();
 
-  public total: number = 0;
-  public pageSize: number = 0;
-  public currentPage: number = 0;
-  public pageCount: number = 0;
+  public total = 0;
+  public pageSize = 0;
+  public currentPage = 0;
+  public pageCount = 0;
 
-  public hasPrevious: boolean = false;
-  public hasNext: boolean = false;
+  public hasPrevious = false;
+  public hasNext = false;
 
   constructor(apiResponse?: AxiosResponse) {
     if (!apiResponse) {

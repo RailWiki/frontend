@@ -1,16 +1,16 @@
 import RoadModel from './Road';
 
 export default class RosterItemModel {
-  public id: number = 0;
+  public id = 0;
 
-  public roadId: number = 0;
+  public roadId = 0;
   public road: RoadModel | null = null;
 
-  public roadNumber: string = '';
-  public reportingMarks: string = '';
+  public roadNumber = '';
+  public reportingMarks = '';
 
   public notes: string | null = null;
-  public slug: string = '';
+  public slug = '';
 
   constructor(data?: any) {
     if (data) {

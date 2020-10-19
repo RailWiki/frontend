@@ -1,6 +1,6 @@
 import ApiService from './api.service';
 import PhotoModel from '@/models/photos/Photo';
-import { AxiosResponse, AxiosTransformer } from 'axios';
+import { AxiosResponse } from 'axios';
 
 const photoService = {
   async getById(photoId: number): Promise<PhotoModel> {
@@ -34,7 +34,7 @@ const photoService = {
         formData.append('files', files[x], files[x].name);
       });
 
-    return ApiService.post(`photos/multiple`, formData, {
+    return ApiService.post('photos/multiple', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -52,7 +52,7 @@ const photoService = {
     // Null these out otherwise the API will try to validate them
     data.album = null;
 
-    return ApiService.put(`photos/${photo.id}`, data).then((response: AxiosResponse) => {
+    return ApiService.put(`photos/${photo.id}`, data).then(() => {
       // Nothing to do?
     });
   }

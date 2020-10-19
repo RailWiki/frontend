@@ -28,8 +28,8 @@ export default {
   components: {
     ListView
   },
-  async created(){
-    await this.loadLatestPhotos(this.maxPhotos)
+  async created() {
+    await this.loadLatestPhotos(this.maxPhotos);
   },
   computed: {
     ...mapGetters('photos', [
@@ -43,5 +43,5 @@ export default {
     ])
   }
 
-}
+};
 </script>

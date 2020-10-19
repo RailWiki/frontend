@@ -1,11 +1,11 @@
 import UserModel from '../User';
 
 export default class AlbumModel {
-  public id: number = 0;
-  public userId: number = 0;
+  public id = 0;
+  public userId = 0;
   public user?: UserModel;
-  public title: string = '';
-  public description: string = '';
+  public title = '';
+  public description = '';
   public createdOn: string = new Date().toISOString();
   public updatedOn: string = new Date().toISOString();
 

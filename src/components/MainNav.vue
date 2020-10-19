@@ -33,33 +33,32 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import config from '../config';
 
 export default Vue.extend({
-    data() {
-        return {
-            isAuthenticated: false
-        };
+  data() {
+    return {
+      isAuthenticated: false
+    };
+  },
+  created() {
+    this.authenticate();
+  },
+  computed: {
+    ...mapGetters([
+      'currentUser'
+    ])
+  },
+  watch: {
+    $route: 'authenticate'
+  },
+  methods: {
+    async authenticate() {
+      this.isAuthenticated = await this.$auth.isAuthenticated();
     },
-    created() {
-        this.authenticate();
-    },
-    computed: {
-      ...mapGetters([
-        'currentUser',
-      ])
-    },
-    watch: {
-        $route: 'authenticate'
-    },
-    methods: {
-        async authenticate() {
-            this.isAuthenticated = await this.$auth.isAuthenticated();
-        },
-        async logout() {
-            await this.$auth.logout();
-            await this.authenticate();
-        }
+    async logout() {
+      await this.$auth.logout();
+      await this.authenticate();
     }
+  }
 });
 </script>

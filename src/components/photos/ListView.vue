@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import PhotoModel from '@/models/photos/Photo';
-
 export default {
   props: {
     photos: {
@@ -62,7 +60,7 @@ export default {
       default: false
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

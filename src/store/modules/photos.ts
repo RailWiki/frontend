@@ -1,19 +1,16 @@
-import { getField, updateField } from 'vuex-map-fields';
 import { Module, Mutation, Action, VuexModule } from 'vuex-module-decorators';
 import PhotoModel from '@/models/photos/Photo';
 import PhotoService from '@/services/photoService';
-import AlbumService from '@/services/albumService';
-import photoService from '@/services/photoService';
 
 @Module({ namespaced: true })
 export default class PhotoModule extends VuexModule {
-  _isLoading: boolean = false;
-  _currentPhoto: PhotoModel | null = null;
+  private _isLoading = false;
+  private _currentPhoto: PhotoModel | null = null;
 
-  _isSaving: boolean = false;
-  _editingError: string | null = null;
+  private _isSaving = false;
+  private _editingError: string | null = null;
 
-  _latestPhotos: PhotoModel[] = new Array<PhotoModel>();
+  private _latestPhotos: PhotoModel[] = new Array<PhotoModel>();
 
   get isLoading(): boolean {
     return this._isLoading;
@@ -36,32 +33,32 @@ export default class PhotoModule extends VuexModule {
   }
 
   @Mutation
-  _setIsLoading(loading: boolean) {
+  private _setIsLoading(loading: boolean) {
     this._isLoading = loading;
   }
 
   @Mutation
-  _setCurrentPhoto(photo: PhotoModel) {
+  private _setCurrentPhoto(photo: PhotoModel) {
     this._currentPhoto = photo;
   }
 
   @Mutation
-  _setIsSaving(saving: boolean) {
+  private _setIsSaving(saving: boolean) {
     this._isSaving = saving;
   }
 
   @Mutation
-  _setEditingError(error: string | null) {
+  private _setEditingError(error: string | null) {
     this._editingError = error;
   }
 
   @Mutation
-  _setLatestPhotos(photos: PhotoModel[]) {
+  private _setLatestPhotos(photos: PhotoModel[]) {
     this._latestPhotos = photos;
   }
 
   @Action
-  async loadLatestPhotos(max: number) {
+  public async loadLatestPhotos(max: number) {
     this.context.commit('_setIsLoading', true);
 
     return PhotoService.getLatest(max).then((photos: PhotoModel[]) => {
@@ -71,7 +68,7 @@ export default class PhotoModule extends VuexModule {
   }
 
   @Action
-  async loadPhoto(photoId: number) {
+  public async loadPhoto(photoId: number) {
     this.context.commit('_setIsLoading', true);
 
     return PhotoService.getById(photoId).then((photo: PhotoModel) => {
@@ -87,20 +84,20 @@ export default class PhotoModule extends VuexModule {
 
     return PhotoService.updatePhoto(photo).then(() => {
       this.context.commit('_setIsSaving', false);
-    }).catch((err: any) => {
+    }).catch(() => {
       this.context.commit('_setIsSaving', false);
       this.context.commit('_setEditingError', 'There was an error saving your photo');
     });
   }
 }
 
-export interface IPhotoState {
+export interface PhotoState {
   isLoading: boolean;
   photo?: PhotoModel;
-  editing: IEditPhotoState;
+  editing: EditPhotoState;
 }
 
-export interface IEditPhotoState {
+export interface EditPhotoState {
   isEditing: boolean;
   photo?: PhotoModel;
   error?: string;

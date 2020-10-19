@@ -25,10 +25,11 @@ export default {
       'roadTypes',
       'currentRoadType'
     ]),
-    sortedTypes: function() {
-      return this.roadTypes.sort((a, b) => {
-        return a.displayOrder > b.displayOrder
-      })
+    sortedTypes() {
+      const roadTypes = this.roadTypes;
+      return roadTypes.sort((a, b) => {
+        return a.displayOrder > b.displayOrder;
+      });
     }
   },
   methods: {
@@ -36,5 +37,5 @@ export default {
       'loadRoadTypes'
     ])
   }
-}
+};
 </script>
