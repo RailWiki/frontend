@@ -23,5 +23,5 @@ export class FilterLocomotivesModel extends FilterModel {
   public modelNumber: string | null = null;
   public serialNumber: string | null = null;
 
-  public page: number = 1;
+  public page = 1;
 }

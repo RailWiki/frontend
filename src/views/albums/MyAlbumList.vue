@@ -9,7 +9,7 @@
     <album-list :albums="userAlbums" />
 
     <b-modal v-model="isEditing" hide-footer :title="(id === 0 ? 'Add Album' : 'Edit Album')">
-      <edit-album @albumSaved="albumSaved" />
+      <edit-album />
     </b-modal>
   </div>
 </template>
@@ -19,7 +19,6 @@ import { mapFields } from 'vuex-map-fields';
 import { mapActions } from 'vuex';
 import AlbumList from '@/components/albums/AlbumList.vue';
 import EditAlbum from './EditAlbum.vue';
-import AlbumModel from '@/models/photos/Album';
 
 export default {
   components: {
@@ -30,11 +29,11 @@ export default {
   data() {
     return {
 
-    }
+    };
   },
 
   async created() {
-    await this.loadCurrentUserAlbums()
+    await this.loadCurrentUserAlbums();
   },
 
   computed: {
@@ -46,11 +45,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('albums', [ 'loadCurrentUserAlbums', 'showAddAlbum' ]),
-
-    async albumSaved(evt) {
-
-    }
+    ...mapActions('albums', ['loadCurrentUserAlbums', 'showAddAlbum'])
   }
-}
+};
 </script>

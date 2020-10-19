@@ -24,7 +24,7 @@ import MainNav from '@/components/MainNav.vue';
   }
 })
 export default class App extends Vue {
-  protected hideNavBar: boolean = false;
+  protected hideNavBar = false;
 
   protected async created() {
     await this.configureApp();

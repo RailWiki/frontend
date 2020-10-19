@@ -1,10 +1,10 @@
 export default class RoadTypeModel {
-  public id: number = 0;
+  public id = 0;
 
-  public name: string = '';
-  public slug: string = '';
+  public name = '';
+  public slug = '';
 
-  public displayOrder: number = 0;
+  public displayOrder = 0;
 
   constructor(data?: any) {
     if (data) {

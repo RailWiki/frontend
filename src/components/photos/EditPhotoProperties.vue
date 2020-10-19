@@ -8,7 +8,7 @@
         <b-form-input
             id="titleInput"
             type="text"
-            v-model="photo.title"
+            v-model="editingPhoto.title"
             required
             placeholder="Photo title"
         />
@@ -16,7 +16,7 @@
       <b-form-group label="Description" label-for="descriptionInput">
         <b-textarea
           id="descriptionInput"
-          v-model="photo.description"
+          v-model="editingPhoto.description"
           rows="5"
           placeholder="Description of the photo"
         />
@@ -25,7 +25,7 @@
         <b-form-input
             id="authorInput"
             type="text"
-            v-model="photo.author"
+            v-model="editingPhoto.author"
             placeholder="Original author of the photo"
         />
       </b-form-group>
@@ -33,14 +33,14 @@
         <b-form-input
             id="locationInput"
             type="text"
-            v-model="photo.locationName"
+            v-model="editingPhoto.locationName"
             placeholder="Location of the photo"
         />
       </b-form-group>
       <b-form-group label="Photo taken on" label-for="photoDateInput">
         <b-form-datepicker
           id="photoDateInput"
-          v-model="photo.photoDate"
+          v-model="editingPhoto.photoDate"
           :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         />
       </b-form-group>
@@ -79,7 +79,7 @@
       no-close-on-backdrop
       hide-footer
     >
-      <locomotive-editor @locomotiveSaved="newLocomotiveAdded" />
+      <locomotive-editor @locomotive-saved="newLocomotiveAdded" />
     </b-modal>
   </div>
 </template>
@@ -105,10 +105,12 @@ export default {
   },
   data() {
     return {
+      editingPhoto: {},
       selectedLocomotives: []
-    }
+    };
   },
   mounted() {
+    this.editingPhoto = this.photo;
     this.selectedLocomotives = this.locomotives;
   },
   computed: {
@@ -132,9 +134,9 @@ export default {
       updatePhotoLocomotives: 'update'
     }),
     async savePhoto() {
-      await this.updatePhoto(this.photo);
+      await this.updatePhoto(this.editingPhoto);
 
-      const locoIds = this.selectedLocomotives.map(x => x.id);
+      const locoIds = this.selectedLocomotives.map((x) => x.id);
       // TODO: saving photo locos is failing
       await this.updatePhotoLocomotives({ photoId: this.photo.id, locoIds });
     },
@@ -159,5 +161,5 @@ export default {
       this.$bvModal.hide('modal-add-locomotive');
     }
   }
-}
+};
 </script>

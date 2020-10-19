@@ -3,12 +3,12 @@ import LocomotiveTypeModel, { FilterLocomotiveTypesModel } from '@/models/roster
 import LocomotiveTypeService from '@/services/locomotiveTypesService';
 import PaginatedModel from '@/models/PaginatedModel';
 
-@Module({namespaced: true})
+@Module({ namespaced: true })
 export default class LocomotiveTypeModule extends VuexModule {
-  _isLoading: boolean = true;
+  private _isLoading = true;
 
-  _types: PaginatedModel<LocomotiveTypeModel> = new PaginatedModel<LocomotiveTypeModel>();
-  _filters: FilterLocomotiveTypesModel = new FilterLocomotiveTypesModel();
+  private _types: PaginatedModel<LocomotiveTypeModel> = new PaginatedModel<LocomotiveTypeModel>();
+  private _filters: FilterLocomotiveTypesModel = new FilterLocomotiveTypesModel();
 
   get isLoading(): boolean {
     return this._isLoading;
@@ -23,17 +23,17 @@ export default class LocomotiveTypeModule extends VuexModule {
   }
 
   @Mutation
-  _setIsLoading(loading: boolean) {
+  private _setIsLoading(loading: boolean) {
     this._isLoading = loading;
   }
 
   @Mutation
-  _setTypes(types: PaginatedModel<LocomotiveTypeModel>) {
+  private _setTypes(types: PaginatedModel<LocomotiveTypeModel>) {
     this._types = types;
   }
 
   @Mutation
-  _setFilters(filter: FilterLocomotiveTypesModel) {
+  private _setFilters(filter: FilterLocomotiveTypesModel) {
     this._filters = filter;
   }
 
@@ -41,11 +41,11 @@ export default class LocomotiveTypeModule extends VuexModule {
   public async loadLocomotiveTypes() {
     this.context.commit('_setIsLoading', true);
 
-    return LocomotiveTypeService.getTypes(this.context.getters.filters).then((types: PaginatedModel<LocomotiveTypeModel>) => {
-      this.context.commit('_setTypes', types);
-      this.context.commit('_setIsLoading', false);
-
-    });
+    return LocomotiveTypeService.getTypes(this.context.getters.filters)
+      .then((types: PaginatedModel<LocomotiveTypeModel>) => {
+        this.context.commit('_setTypes', types);
+        this.context.commit('_setIsLoading', false);
+      });
   }
 
   // @Action

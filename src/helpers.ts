@@ -1,5 +1,5 @@
 export function truncateString(input: string, maxLength: number) {
-  const append = '...'
+  const append = '...';
 
   if (!input || input.length <= maxLength) {
     return input;
@@ -7,4 +7,4 @@ export function truncateString(input: string, maxLength: number) {
 
   input = input.slice(0, maxLength);
   return `${input}${append}`;
-};
+}

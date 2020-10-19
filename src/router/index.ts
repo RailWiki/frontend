@@ -28,7 +28,7 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
   },
   {
     path: '/implicit/callback',
@@ -62,7 +62,7 @@ const routes: RouteConfig[] = [
     meta: { requiresAuth: true },
     children: [
       { path: 'mine', component: MyAlbumList, meta: { requiresAuth: true } },
-      { path: ':albumId', name: 'viewAlbum', component: ViewAlbum },
+      { path: ':albumId', name: 'viewAlbum', component: ViewAlbum }
     ]
   },
   {
@@ -70,7 +70,7 @@ const routes: RouteConfig[] = [
     path: '/photos',
     component: GenericRouterView, // TODO: change to a diff component
     children: [
-      { path: 'view/:photoId', name: 'viewPhoto', component: ViewPhoto },
+      { path: 'view/:photoId', name: 'viewPhoto', component: ViewPhoto }
     ]
   },
   {
@@ -79,7 +79,7 @@ const routes: RouteConfig[] = [
     component: GenericRouterView,
     children: [
       { path: ':typeSlug?', name: 'roadsList', component: RoadsList },
-      { path: 'view/:id', name: 'roadDetails', component: RoadDetails },
+      { path: 'view/:id', name: 'roadDetails', component: RoadDetails }
       // { path: 'details/:slug', name: 'roadDetails', component: RoadDetails },
     ]
   },
@@ -89,7 +89,7 @@ const routes: RouteConfig[] = [
     component: GenericRouterView,
     children: [
       { path: '', name: 'locomotiveList', component: LocomotiveList },
-      { path: ':id', name: 'locomotiveDetails', component: LocomotiveDetails },
+      { path: ':id', name: 'locomotiveDetails', component: LocomotiveDetails }
     ]
   },
   {
@@ -97,7 +97,7 @@ const routes: RouteConfig[] = [
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta: { requiresAuth: true }
-  },
+  }
 ];
 
 const router = new VueRouter({

@@ -18,6 +18,6 @@ export default {
   name: 'Home',
   components: {
     LatestPhotos
-  },
+  }
 };
 </script>

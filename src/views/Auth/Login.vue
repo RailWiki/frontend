@@ -5,7 +5,6 @@
                 <div class="b-form-1">
                     <h1>RailWiki Sign In</h1>
 
-
                     <b-form @submit.prevent="login">
                         <b-form-group label="Email address" label-for="emailInput" :label-sr-only="true">
                             <b-form-input
@@ -41,22 +40,21 @@
 <script>
 // This component is in JS because Okta isn't playing nicely with TS types :(
 
-import Vue from 'vue';
 import UserService from '../../services/user.service';
 
 export default {
-    data() {
-        return {
-            username: '',
-            password: ''
-        };
-    },
-    methods: {
-      login() {
-        UserService.login(this.username, this.password).then(() => {
-          this.$router.push('/');
-        });
-      }
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  methods: {
+    login() {
+      UserService.login(this.username, this.password).then(() => {
+        this.$router.push('/');
+      });
     }
+  }
 };
 </script>

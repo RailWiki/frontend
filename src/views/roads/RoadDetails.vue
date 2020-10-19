@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters('roads', [
@@ -51,5 +51,5 @@ export default {
       await this.loadRoad(id);
     }
   }
-}
+};
 </script>

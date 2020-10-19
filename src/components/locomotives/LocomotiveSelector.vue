@@ -78,14 +78,14 @@ export default {
       selectLocomotive: null,
       locomotives: [],
       selectedLocomotiveIds: []
-    }
+    };
   },
   computed: {
     ...mapGetters('locomotives', {
       searchLocos: 'locomotives'
     }),
-    locomotiveOptions: function () {
-      return this.searchLocos.data
+    locomotiveOptions() {
+      return this.searchLocos.data;
     }
   },
   methods: {
@@ -94,27 +94,30 @@ export default {
       'clearFilters'
     ]),
 
-    showEditor () {
+    showEditor() {
       this.$bvModal.show('modal-edit-locomotives');
     },
-    editModalShown () {
+    editModalShown() {
+      /* eslint-disable-next-line no-console */
       console.log('selected locos', this.selectedLocos);
 
       this.locomotives = this.selectedLocos;
       this.selectedLocomotiveIds = this.selectedLocos.map(x => x.locomotiveId);
     },
-    locomotiveSelected (loco, id) {
-      console.log('locomotive selected', loco)
+    locomotiveSelected(loco) {
+      /* eslint-disable-next-line no-console */
+      console.log('locomotive selected', loco);
       this.locomotives.push(loco);
     },
-    removeLocomotive (locomotive) {
+    removeLocomotive(locomotive) {
       const index = this.locomotives.indexOf(locomotive);
       this.locomotives.splice(index, 1);
     },
-    locomotivesUpdated () {
+    locomotivesUpdated() {
+      /* eslint-disable-next-line no-console */
       console.log('updated - selected loco ids', this.selectedLocomotiveIds);
     },
-    editModalHidden () {
+    editModalHidden() {
       // Clear the filters whenever this modal is hidden,
       // because right now, the same filters apply to /locomotives
       this.clearFilters();
@@ -130,7 +133,7 @@ export default {
       await this.search(filter);
     }, 500)
   }
-}
+};
 </script>
 
 <style lang="scss">

@@ -41,7 +41,6 @@
 import { mapFields } from 'vuex-map-fields';
 import { mapActions, mapGetters } from 'vuex';
 import EditAblum from './EditAlbum.vue';
-import AlbumModel from '../../models/photos/Album';
 
 import PhotoUploader from '../../components/photos/PhotoUploader.vue';
 import GridView from '@/components/photos/GridView.vue';
@@ -56,7 +55,7 @@ export default {
   data() {
     return {
 
-    }
+    };
   },
 
   async created() {
@@ -77,13 +76,13 @@ export default {
     ...mapGetters([
       'currentUser'
     ]),
-    canEdit: function() {
-      return this.currentUser && this.currentUser.id === this.album.userId
+    canEdit() {
+      return this.currentUser && this.currentUser.id === this.album.userId;
     }
   },
 
   methods: {
-    ...mapActions('albums', [ 'loadAlbum', 'editAlbum', 'loadAlbumPhotos' ]),
+    ...mapActions('albums', ['loadAlbum', 'editAlbum', 'loadAlbumPhotos']),
 
     async loadPage() {
       const albumId = parseInt(this.$route.params.albumId);
@@ -91,5 +90,5 @@ export default {
       await this.loadAlbumPhotos(albumId);
     }
   }
-}
+};
 </script>

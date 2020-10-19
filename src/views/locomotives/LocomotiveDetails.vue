@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
 import GridView from '@/components/photos/GridView.vue';
 import ListView from '@/components/photos/ListView.vue';
 import ViewModeSelector from '@/components/photos/ViewModeSelector.vue';
@@ -44,12 +44,12 @@ export default {
   data() {
     return {
       viewMode: 'grid'
-    }
+    };
   },
   computed: {
     ...mapGetters('locomotives', [
       'isLoading',
-      'locomotive',
+      'locomotive'
     ]),
     ...mapGetters('locomotivePhotos', [
       'photos'
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     ...mapActions('locomotives', [
-      'loadLocomotive',
+      'loadLocomotive'
     ]),
     ...mapActions('locomotivePhotos', [
       'loadLocomotivePhotos'
@@ -80,7 +80,7 @@ export default {
       await this.loadLocomotivePhotos(id);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

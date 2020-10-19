@@ -54,6 +54,6 @@ export default new Vuex.Store({
     users: UserModule
   },
   plugins: [
-    logger,
+    logger
   ]
 });

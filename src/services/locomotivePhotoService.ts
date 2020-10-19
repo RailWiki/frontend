@@ -25,10 +25,10 @@ const locomotivePhotoService = {
     const url = `photos/${photoId}/locomotives`;
     const data = {
       locomotiveIds
-    }
+    };
 
     return Api.put(url, data);
   }
-}
+};
 
-export default locomotivePhotoService
+export default locomotivePhotoService;

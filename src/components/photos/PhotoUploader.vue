@@ -20,7 +20,6 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
-import PhotoService from '../../services/photoService';
 
 export default {
   props: {
@@ -29,24 +28,26 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       files: []
-    }
+    };
   },
   computed: {
     ...mapFields('albums', [
       'isUploading'
     ]),
-    hasFiles: function() { return this.files && this.files.length > 0 }
+    hasFiles() {
+      return this.files && this.files.length > 0;
+    }
   },
   methods: {
-    ...mapActions('albums', [ 'uploadPhotos' ]),
+    ...mapActions('albums', ['uploadPhotos']),
     async saveTest() {
       // TODO: actual implementation. Use vuex store?
-      await this.uploadPhotos({ albumId: this.albumId, files: this.files});
+      await this.uploadPhotos({ albumId: this.albumId, files: this.files });
       this.files = [];
     }
   }
-}
+};
 </script>

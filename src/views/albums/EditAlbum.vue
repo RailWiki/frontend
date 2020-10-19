@@ -28,13 +28,12 @@
 <script>
 import { mapFields } from 'vuex-map-fields';
 import { mapActions } from 'vuex';
-import AlbumModel from '@/models/photos/Album';
 
 export default {
   data() {
     return {
 
-    }
+    };
   },
 
   computed: {
@@ -42,19 +41,19 @@ export default {
       'editing.album.id',
       'editing.album.title',
       'editing.album.description',
-      'editing.error',
+      'editing.error'
     ])
   },
 
   methods: {
-    ...mapActions('albums', [ 'save' ]),
+    ...mapActions('albums', ['save']),
 
     async saveAlbum() {
       this.save().then(() => {
-        this.$emit('albumSaved');
-      })
+        this.$emit('album-saved');
+      });
     }
   }
-}
+};
 
 </script>

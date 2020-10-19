@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
+import VueMoment from 'vue-moment';
 import Auth from '@okta/okta-vue';
 import App from './App.vue';
 import router from './router';
@@ -19,7 +20,7 @@ Vue.component('multiselect', Multiselect);
 ApiService.init();
 
 Vue.use(Auth, config.auth);
-Vue.use(require('vue-moment'));
+Vue.use(VueMoment);
 
 Vue.filter('truncate', helpers.truncateString);
 
@@ -28,5 +29,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount('#app');
