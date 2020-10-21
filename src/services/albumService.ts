@@ -45,6 +45,16 @@ const albumService = {
       album = new AlbumModel(response.data);
       return album;
     });
+  },
+
+  async setAlbumCover(albumId: number, photoId: number) {
+    const url = `albums/${albumId}/cover`;
+
+    const data = {
+      photoId
+    };
+
+    await ApiService.put(url, data);
   }
 };
 

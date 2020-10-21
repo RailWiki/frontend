@@ -9,29 +9,51 @@
 
       <div class="d-flex justify-content-between">
         <h5>
-          By
-          <router-link :to="{ name: 'userProfile', params: { userId: album.userId } }">
+          {{ albumPhotos.length }} photos
+          by
+          <router-link :to="{ name: 'userProfile', params: { userId: album.user.id } }">
             {{ album.user.fullName }}
           </router-link>
         </h5>
 
-        <div class="album-info">
-          <h5>{{ albumPhotos.length }} photos</h5>
-          <!-- TODO: Add date range of photos -->
+        <div class="album-actions" v-if="canEdit">
+          <b-dropdown right text="" variant="outline-secondary">
+            <template #button-content>
+              <b-icon-gear />
+            </template>
+            <b-dropdown-item @click="addPhotos">Add Photos</b-dropdown-item>
+            <b-dropdown-item @click="editAlbum(album)">Edit Album</b-dropdown-item>
+          </b-dropdown>
         </div>
       </div>
 
-      <div class="actions my-2" v-if="canEdit">
-        <b-button variant="secondary" @click='editAlbum(album)'>Edit</b-button>
-      </div>
+      <b-modal
+        v-model="showAddPhotos"
+        title="Add Photos"
+        no-close-on-backdrop
+        hide-footer
+      >
+        <photo-uploader
+          v-if="canEdit"
+          :albumId="album.id"
+          @photos-added="photosAdded"
+        />
+      </b-modal>
 
-      <photo-uploader v-if="canEdit" :albumId="album.id" class="mb-2" />
-
-      <grid-view :photos="albumPhotos" class="mt-4" />
-
+      <grid-view
+        :photos="albumPhotos"
+        class="mt-4"
+        :showEditOptions="canEdit"
+        @set-album-cover="setCoverPhoto"
+      />
     </template>
 
-    <b-modal v-model="isEditing" hide-footer title="Edit Album">
+    <b-modal
+      v-model="isEditing"
+      title="Edit Album"
+      no-close-on-backdrop
+      hide-footer
+    >
       <edit-album />
     </b-modal>
   </div>
@@ -40,6 +62,7 @@
 <script>
 import { mapFields } from 'vuex-map-fields';
 import { mapActions, mapGetters } from 'vuex';
+import { BIconGear } from 'bootstrap-vue';
 import EditAblum from './EditAlbum.vue';
 
 import PhotoUploader from '../../components/photos/PhotoUploader.vue';
@@ -49,12 +72,13 @@ export default {
   components: {
     'edit-album': EditAblum,
     PhotoUploader,
-    GridView
+    GridView,
+    BIconGear
   },
 
   data() {
     return {
-
+      showAddPhotos: false
     };
   },
 
@@ -77,17 +101,31 @@ export default {
       'currentUser'
     ]),
     canEdit() {
-      return this.currentUser && this.currentUser.id === this.album.userId;
+      return this.currentUser && this.currentUser.id === this.album.user.id;
     }
   },
 
   methods: {
-    ...mapActions('albums', ['loadAlbum', 'editAlbum', 'loadAlbumPhotos']),
+    ...mapActions('albums', [
+      'loadAlbum',
+      'editAlbum',
+      'loadAlbumPhotos',
+      'setAlbumCover'
+    ]),
 
+    addPhotos() {
+      this.showAddPhotos = true;
+    },
     async loadPage() {
       const albumId = parseInt(this.$route.params.albumId);
       await this.$store.dispatch('albums/loadAlbum', albumId);
       await this.loadAlbumPhotos(albumId);
+    },
+    async photosAdded() {
+      this.showAddPhotos = false;
+    },
+    async setCoverPhoto(photo) {
+      await this.setAlbumCover({ albumId: this.album.id, photoId: photo.id });
     }
   }
 };

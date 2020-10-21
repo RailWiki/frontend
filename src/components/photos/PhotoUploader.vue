@@ -11,7 +11,13 @@
           class="mb-2"
         />
 
-        <b-button variant="primary" @click="saveTest" :disabled="!hasFiles">Upload photos</b-button>
+        <b-button
+          variant="primary"
+          @click="saveTest"
+          :disabled="!hasFiles"
+        >
+          Upload photos
+        </b-button>
       </b-form-group>
     </b-overlay>
   </div>
@@ -46,6 +52,7 @@ export default {
     async saveTest() {
       // TODO: actual implementation. Use vuex store?
       await this.uploadPhotos({ albumId: this.albumId, files: this.files });
+      this.$emit('photos-added');
       this.files = [];
     }
   }
