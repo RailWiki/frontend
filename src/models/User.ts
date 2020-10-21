@@ -6,6 +6,7 @@ export default class UserModel {
   public firstName = '';
   public lastName = '';
   public fullName = '';
+  public slug = '';
 
   constructor(data: any) {
     Object.assign(this, data);

@@ -60,16 +60,16 @@ export default {
   },
   methods: {
     ...mapActions('users', [
-      'loadById'
+      'loadBySlug'
     ]),
     ...mapActions('albums', [
       'loadUserAlbums'
     ]),
     async loadUser() {
-      const userId = parseInt(this.$route.params.userId);
+      const userSlug = this.$route.params.userSlug;
 
-      await this.loadById(userId);
-      await this.loadUserAlbums(userId);
+      await this.loadBySlug(userSlug);
+      await this.loadUserAlbums(this.user.id);
     }
   }
 };

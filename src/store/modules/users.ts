@@ -62,6 +62,21 @@ export default class UserModule extends VuexModule {
     });
   }
 
+  @Action({ rawError: true })
+  public async loadBySlug(slug: string) {
+    this.context.commit('_setIsLoading', true);
+
+    const user = await userService.getBySlug(slug);
+
+    // TODO: Handle user not found
+    this.context.commit('_setUser', user);
+
+    const userStats = await userService.getUserStats(user.id);
+    this.context.commit('_setUserStats', userStats);
+
+    this.context.commit('_setIsLoading', false);
+  }
+
   @Action
   public async loadUsers(filter?: FilterUsersModel) {
     this.context.commit('_setIsLoading', true);

@@ -16,6 +16,15 @@ const userService = {
     });
   },
 
+  async getBySlug(slug: string): Promise<UserModel> {
+    const url = `users/slug/${slug}`;
+
+    const response = await ApiService.get(url);
+    const user = new UserModel(response.data);
+
+    return user;
+  },
+
   async getUsers(filter?: FilterUsersModel): Promise<PaginatedModel<UserModel>> {
     let url = 'users';
 
