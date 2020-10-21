@@ -6,6 +6,10 @@ export default class AlbumModel {
   public user?: UserModel;
   public title = '';
   public description = '';
+
+  public coverPhotoId: number | null = null;
+  public coverPhotoUrl = '';
+
   public createdOn: string = new Date().toISOString();
   public updatedOn: string = new Date().toISOString();
 

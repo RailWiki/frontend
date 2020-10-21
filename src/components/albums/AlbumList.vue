@@ -2,7 +2,7 @@
   <div class="row row-cols-1 row-cols-md-3">
     <div class="col mb-4" v-for="album in albums" :key="album.id">
       <div class="card">
-        <img src="https://placehold.it/362x190" class="card-img-top" alt="...">
+        <img :src="getCoverPhotoUrl(album)" class="card-img-top" alt="...">
         <div class="card-body">
           <router-link :to="{ name: 'viewAlbum', params: { albumId: album.id } }">
             <h5 class="card-title">
@@ -32,6 +32,13 @@ export default {
   props: {
     albums: {
       type: Array
+    }
+  },
+  methods: {
+    getCoverPhotoUrl(album) {
+      return album.coverPhotoUrl
+        ? album.coverPhotoUrl
+        : 'https://placehold.it/362x190';
     }
   }
 };

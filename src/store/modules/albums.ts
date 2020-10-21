@@ -140,6 +140,13 @@ const actions = {
       commit('ADD_PHOTOS_TO_ALBUM', result);
       commit('SET_IS_UPLOADING', false);
     });
+  },
+
+  async setAlbumCover({ commit, dispatch }, data: any) {
+    await AlbumService.setAlbumCover(data.albumId, data.photoId);
+
+    // TODO: Don't reload all the albums
+    await dispatch('loadCurrentUserAlbums');
   }
 };
 
