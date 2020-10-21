@@ -11,7 +11,7 @@
         <h5>
           {{ albumPhotos.length }} photos
           by
-          <router-link :to="{ name: 'userProfile', params: { userId: album.user.id } }">
+          <router-link :to="{ name: 'userProfile', params: { userSlug: album.user.slug } }">
             {{ album.user.fullName }}
           </router-link>
         </h5>

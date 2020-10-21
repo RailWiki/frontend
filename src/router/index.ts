@@ -52,7 +52,7 @@ const routes: RouteConfig[] = [
     component: GenericRouterView,
     children: [
       { path: '', name: 'userList', component: UserList },
-      { path: 'profile/:userId', name: 'userProfile', component: UserProfile }
+      { path: ':userSlug', name: 'userProfile', component: UserProfile }
     ]
   },
   {
