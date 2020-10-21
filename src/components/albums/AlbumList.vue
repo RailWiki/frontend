@@ -2,25 +2,20 @@
   <div class="row row-cols-1 row-cols-md-3">
     <div class="col mb-4" v-for="album in albums" :key="album.id">
       <div class="card">
-        <img :src="getCoverPhotoUrl(album)" class="card-img-top" alt="...">
+        <router-link :to="{ name: 'viewAlbum', params: { albumId: album.id } }">
+          <img :src="getCoverPhotoUrl(album)" class="card-img-top" alt="...">
+        </router-link>
         <div class="card-body">
           <router-link :to="{ name: 'viewAlbum', params: { albumId: album.id } }">
             <h5 class="card-title">
               {{ album.title}}
             </h5>
           </router-link>
-          <p class="card-text">
-            {{ album.description}}
-          </p>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <small class="text-muted">
-            Updated {{ album.updatedOn | moment('from', 'now')}}
-          </small>
-
-          <span class="actions">
-            <!-- <b-button size="sm" variant="link">Edit</b-button> -->
-          </span>
+          <div class="card-text">
+            <small class="text-muted">
+              Updated {{ album.updatedOn | moment('from', 'now')}}
+            </small>
+          </div>
         </div>
       </div>
     </div>
