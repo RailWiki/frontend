@@ -139,6 +139,8 @@ export default {
       const locoIds = this.selectedLocomotives.map((x) => x.id);
       // TODO: saving photo locos is failing
       await this.updatePhotoLocomotives({ photoId: this.photo.id, locoIds });
+
+      this.$emit('photo-saved');
     },
 
     filterLocomotives: _.debounce(async function(query) {

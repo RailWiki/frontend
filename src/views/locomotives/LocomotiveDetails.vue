@@ -4,7 +4,9 @@
       Loading...
     </template>
     <template v-else>
-      <h1>{{ locomotive.roadNumber }}</h1>
+      <h1>{{ locomotive.reportingMarks }}</h1>
+
+      <hr />
 
       <ul class="locomotive-properties list-inline">
         <li class="list-inline-item">

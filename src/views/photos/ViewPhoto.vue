@@ -7,14 +7,20 @@
     <template v-else>
       <div class="header d-flex justify-content-between">
         <h1>{{ currentPhoto.title }}</h1>
+
+        <div class="actions mt-2">
+          <b-button variant="outline-secondary" @click="openEditor">Edit Properties</b-button>
+        </div>
       </div>
 
+      <hr />
+
       <ul class="photo-properties list-inline">
-        <li class="list-inline-item">
+        <li class="list-inline-item" v-if="currentPhoto.photoDate">
           <b>Taken on</b> {{ currentPhoto.photoDate | moment('YYYY-MM-DD') }}
         </li>
 
-        <li class="list-inline-item">
+        <li class="list-inline-item" v-if="currentPhoto.author">
           <b>Author</b> {{ currentPhoto.author }}
         </li>
 
@@ -29,17 +35,40 @@
         <li class="list-inline-item">
           <b>Collection of</b> {{ currentPhoto.userName }}
         </li>
+
+        <li class="list-inline-item locomotives">
+          <b>Locomotives </b>
+          <b-badge
+            :to="{ name: 'locomotiveDetails', params: { id: loco.locomotive.id } }"
+            v-for="loco in photoLocomotives"
+            :key="loco.locomotive.id"
+          >
+            {{ loco.locomotive.reportingMarks }}
+          </b-badge>
+        </li>
       </ul>
 
-      <div class="actions mb-2">
-        <b-button variant="outline-secondary" v-b-toggle.sidebar-editing>Edit Properties</b-button>
-      </div>
+      <img
+        :src="currentPhoto.files.large"
+        :alt="currentPhoto.title"
+        :title="currentPhoto.title"
+        class="photo"
+      />
 
-      <img :src="currentPhoto.files.large" :alt="currentPhoto.title" :title="currentPhoto.title" />
-
-      <b-sidebar id="sidebar-editing" title="Edit Photo" right shadow lazy>
+      <b-sidebar
+        v-model="showEditor"
+        title="Edit Photo"
+        width="400px"
+        right
+        shadow
+        lazy
+      >
         <div class="px-3 py-2">
-          <edit-photo-properties :photo="currentPhoto" :locomotives="locomotives" />
+          <edit-photo-properties
+            :photo="currentPhoto"
+            :locomotives="locomotives"
+            @photo-saved="photoSaved"
+          />
         </div>
       </b-sidebar>
     </template>
@@ -57,7 +86,7 @@ export default {
 
   data() {
     return {
-
+      showEditor: false
     };
   },
 
@@ -94,6 +123,14 @@ export default {
       });
 
       await this.loadPhotoLocomotives(photoId);
+    },
+
+    openEditor() {
+      this.showEditor = true;
+    },
+
+    photoSaved() {
+      this.showEditor = false;
     }
   }
 };
@@ -104,5 +141,14 @@ export default {
   .list-inline-item {
     margin-right: 2rem;
   }
+
+  .locomotives {
+    .badge {
+      margin-right: 0.25rem;
+    }
+  }
+}
+.photo {
+  width: 100%;
 }
 </style>
