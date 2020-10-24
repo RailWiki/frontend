@@ -8,7 +8,7 @@
       <div class="header d-flex justify-content-between">
         <h1>{{ currentPhoto.title }}</h1>
 
-        <div class="actions mt-2">
+        <div class="actions mt-2" v-if="canEdit">
           <b-button variant="outline-secondary" @click="openEditor">Edit Properties</b-button>
         </div>
       </div>
@@ -62,6 +62,7 @@
         right
         shadow
         lazy
+        v-if="canEdit"
       >
         <div class="px-3 py-2">
           <edit-photo-properties
@@ -92,7 +93,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      'currentUser'
+      'currentUser',
+      'isCurrentUserApproved'
     ]),
     ...mapGetters('photos', [
       'isLoading',
@@ -103,6 +105,11 @@ export default {
     }),
     locomotives() {
       return this.photoLocomotives.map((x) => x.locomotive);
+    },
+    canEdit() {
+      return this.currentUser
+        && this.isCurrentUserApproved
+        && this.currentUser.id === this.currentPhoto.userId;
     }
   },
 

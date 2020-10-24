@@ -7,6 +7,7 @@ export default class UserModel {
   public lastName = '';
   public fullName = '';
   public slug = '';
+  public isApproved = false;
 
   constructor(data: any) {
     Object.assign(this, data);

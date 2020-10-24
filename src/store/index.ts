@@ -29,7 +29,9 @@ export default new Vuex.Store({
     currentUser: null
   } as AppState,
   getters: {
-    currentUser: (state) => state.currentUser
+    currentUser: (state) => state.currentUser,
+    isCurrentUserApproved: (state) => state.currentUser
+      && state.currentUser.isApproved
   },
   mutations: {
     SET_CURRENT_USER(state, user: UserModel) {

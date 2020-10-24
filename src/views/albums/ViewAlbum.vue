@@ -98,10 +98,13 @@ export default {
       'albumPhotos'
     ]),
     ...mapGetters([
-      'currentUser'
+      'currentUser',
+      'isCurrentUserApproved'
     ]),
     canEdit() {
-      return this.currentUser && this.currentUser.id === this.album.user.id;
+      return this.currentUser
+        && this.isCurrentUserApproved
+        && this.currentUser.id === this.album.user.id;
     }
   },
 

@@ -2,7 +2,7 @@
   <div id="album-list">
     <h1>My Photo Albums</h1>
 
-    <div class="page-actions my-2">
+    <div class="page-actions my-2" v-if="isCurrentUserApproved">
       <b-button variant="success" @click="showAddAlbum">Add Album</b-button>
     </div>
 
@@ -16,7 +16,7 @@
 
 <script>
 import { mapFields } from 'vuex-map-fields';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import AlbumList from '@/components/albums/AlbumList.vue';
 import EditAlbum from './EditAlbum.vue';
 
@@ -37,6 +37,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters([
+      'isCurrentUserApproved'
+    ]),
     ...mapFields('albums', [
       'userAlbums',
       'editing.isEditing',
