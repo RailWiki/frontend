@@ -1,3 +1,4 @@
+import UserModel from '../User';
 import AlbumModel from './Album';
 
 export class PhotoFilesModel {
@@ -15,10 +16,8 @@ export class PhotoFilesModel {
 
 export default class PhotoModel {
   public id = 0;
-  public albumId = 0;
   public album: AlbumModel | null = null;
-  public userId = 0;
-  public userName: string | null = null;
+  public user: UserModel | null = null;
   public author = '';
   public locationName?: string;
   public locationId?: number;
@@ -34,6 +33,7 @@ export default class PhotoModel {
     if (data) {
       Object.assign(this, data);
       this.album = new AlbumModel(data.album);
+      this.user = new UserModel(data.user);
       this.files = new PhotoFilesModel(data.files);
     }
   }

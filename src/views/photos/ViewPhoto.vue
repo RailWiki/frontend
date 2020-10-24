@@ -29,11 +29,17 @@
         </li>
 
         <li class="list-inline-item">
-          <b>Album</b> <router-link :to="{ name: 'viewAlbum', params: { albumId: currentPhoto.albumId } }">{{ currentPhoto.album.title }}</router-link>
+          <b>Album </b>
+          <router-link :to="{ name: 'viewAlbum', params: { albumId: currentPhoto.albumId } }">
+            {{ currentPhoto.album.title }}
+          </router-link>
         </li>
 
         <li class="list-inline-item">
-          <b>Collection of</b> {{ currentPhoto.userName }}
+          <b>Collection of </b>
+          <router-link :to="{name: 'userProfile', params: { userSlug: currentPhoto.user.slug } }">
+            {{ currentPhoto.user.fullName }}
+          </router-link>
         </li>
 
         <li class="list-inline-item locomotives">
