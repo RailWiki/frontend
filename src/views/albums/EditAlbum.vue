@@ -8,7 +8,7 @@
         <b-form-input
             id="titleInput"
             type="text"
-            v-model="title"
+            v-model=" title"
             required
             placeholder="Album title"
         />
@@ -38,9 +38,9 @@ export default {
 
   computed: {
     ...mapFields('albums', [
-      'editing.album.id',
-      'editing.album.title',
-      'editing.album.description',
+      'editing.id',
+      'editing.title',
+      'editing.description',
       'editing.error'
     ])
   },

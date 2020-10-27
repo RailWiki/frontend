@@ -5,27 +5,36 @@
     </template>
 
     <template v-if="!isLoading">
-      <h1>{{ album.title }}</h1>
 
       <div class="d-flex justify-content-between">
-        <h5>
-          {{ albumPhotos.length }} photos
-          by
-          <router-link :to="{ name: 'userProfile', params: { userSlug: album.user.slug } }">
-            {{ album.user.fullName }}
-          </router-link>
-        </h5>
+        <h1>{{ viewing.title }}</h1>
 
-        <div class="album-actions" v-if="canEdit">
+        <div class="album-actions my-2" v-if="canEdit">
           <b-dropdown right text="" variant="outline-secondary">
             <template #button-content>
               <b-icon-gear />
             </template>
             <b-dropdown-item @click="addPhotos">Add Photos</b-dropdown-item>
-            <b-dropdown-item @click="editAlbum(album)">Edit Album</b-dropdown-item>
+            <b-dropdown-item @click="editAlbum(viewing)">Edit Album</b-dropdown-item>
           </b-dropdown>
         </div>
       </div>
+
+      <h5>
+        {{ albumPhotos.length }} photos
+        by
+        <router-link :to="{ name: 'userProfile', params: { userSlug: viewing.user.slug } }">
+          {{ viewing.user.fullName }}
+        </router-link>
+      </h5>
+
+      <template v-if="viewing.description">
+        <p class="album-description my-2">
+          {{ viewing.description }}
+        </p>
+
+        <hr />
+      </template>
 
       <b-modal
         v-model="showAddPhotos"
@@ -35,7 +44,7 @@
       >
         <photo-uploader
           v-if="canEdit"
-          :albumId="album.id"
+          :albumId="viewing.id"
           @photos-added="photosAdded"
         />
       </b-modal>
@@ -93,7 +102,7 @@ export default {
   computed: {
     ...mapFields('albums', [
       'isLoading',
-      'viewing.album',
+      'viewing',
       'editing.isEditing',
       'albumPhotos'
     ]),
@@ -104,7 +113,7 @@ export default {
     canEdit() {
       return this.currentUser
         && this.isCurrentUserApproved
-        && this.currentUser.id === this.album.user.id;
+        && this.currentUser.id === this.viewing.user.id;
     }
   },
 
@@ -128,7 +137,7 @@ export default {
       this.showAddPhotos = false;
     },
     async setCoverPhoto(photo) {
-      await this.setAlbumCover({ albumId: this.album.id, photoId: photo.id });
+      await this.setAlbumCover({ albumId: this.id, photoId: photo.id });
     }
   }
 };

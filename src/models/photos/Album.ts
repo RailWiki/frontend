@@ -2,8 +2,7 @@ import UserModel from '../User';
 
 export default class AlbumModel {
   public id = 0;
-  public userId = 0;
-  public user?: UserModel;
+  public user?: UserModel = new UserModel();
   public title = '';
   public description = '';
 
