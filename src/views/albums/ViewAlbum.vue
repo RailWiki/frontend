@@ -72,7 +72,7 @@
 import { mapFields } from 'vuex-map-fields';
 import { mapActions, mapGetters } from 'vuex';
 import { BIconGear } from 'bootstrap-vue';
-import EditAblum from './EditAlbum.vue';
+import EditAblum from '@/components/albums/EditAlbum.vue';
 
 import PhotoUploader from '../../components/photos/PhotoUploader.vue';
 import GridView from '@/components/photos/GridView.vue';
