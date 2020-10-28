@@ -18,7 +18,7 @@
 import { mapFields } from 'vuex-map-fields';
 import { mapActions, mapGetters } from 'vuex';
 import AlbumList from '@/components/albums/AlbumList.vue';
-import EditAlbum from './EditAlbum.vue';
+import EditAlbum from '@/components/albums/EditAlbum.vue';
 
 export default {
   components: {
@@ -43,7 +43,11 @@ export default {
     ...mapFields('albums', [
       'userAlbums',
       'editing.isEditing',
-      'editing.album.id'
+      'editing.id',
+      'editing.title',
+      'editing.description',
+      'editing.location',
+      'editing.error'
     ])
   },
 

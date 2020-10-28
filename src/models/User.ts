@@ -9,8 +9,10 @@ export default class UserModel {
   public slug = '';
   public isApproved = false;
 
-  constructor(data: any) {
-    Object.assign(this, data);
+  constructor(data?: any) {
+    if (data) {
+      Object.assign(this, data);
+    }
   }
 }
 

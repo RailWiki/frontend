@@ -1,5 +1,5 @@
 import ApiService from './api.service';
-import AlbumModel from '../models/photos/Album';
+import AlbumModel, { WriteAlbumModel } from '../models/photos/Album';
 import { AxiosResponse } from 'axios';
 
 const albumService = {
@@ -30,19 +30,16 @@ const albumService = {
     });
   },
 
-  async create(album: AlbumModel): Promise<AlbumModel> {
+  async create(album: WriteAlbumModel): Promise<AlbumModel> {
     return ApiService.post('albums', album).then((response: any) => {
       const newAlbum = new AlbumModel(response.data);
       return newAlbum;
     });
   },
 
-  async update(album: AlbumModel): Promise<AlbumModel> {
-    // Clear the user model so ASP.NET Core doesn't balk at it
-    album.user = undefined;
-
+  async update(album: WriteAlbumModel): Promise<AlbumModel> {
     return ApiService.put(`albums/${album.id}`, album).then((response: any) => {
-      album = new AlbumModel(response.data);
+      const album = new AlbumModel(response.data);
       return album;
     });
   },

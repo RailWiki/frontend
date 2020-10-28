@@ -1,21 +1,34 @@
 import { getField, updateField } from 'vuex-map-fields';
-import AlbumModel from '@/models/photos/Album';
+import AlbumModel, { WriteAlbumModel } from '@/models/photos/Album';
 import PhotoModel from '@/models/photos/Photo';
 import AlbumService from '@/services/albumService';
 import PhotoService from '@/services/photoService';
 
 // TODO: Move photo things to the photo module
 
+const getDefaultViewingState = () => {
+  return new AlbumModel();
+}
+
+const getDefaultEditingState = () => {
+  return {
+    isEditing: false,
+    error: null,
+    id: 0,
+    title: null,
+    description: null
+  }
+};
+
 const state = {
   userAlbums: new Array<AlbumModel>(),
   isLoading: false,
+
   viewing: {
-    album: new AlbumModel()
+    ...getDefaultViewingState()
   },
   editing: {
-    isEditing: false,
-    error: null,
-    album: new AlbumModel()
+    ...getDefaultEditingState()
   },
 
   isUploading: false,
@@ -37,7 +50,8 @@ const mutations = {
   },
 
   SET_VIEWING_ALBUM(state, album) {
-    state.viewing.album = album;
+    console.log('set viewing ablum', album);
+    state.viewing = Object.assign(state.viewing, album);
   },
 
   SET_USER_ALBUMS(state, albums) {
@@ -50,10 +64,13 @@ const mutations = {
     state.editing.isEditing = value;
   },
   SET_EDITING_ALBUM(state, album) {
-    state.editing.album = album;
+    state.editing = Object.assign(state.editing, album);
   },
   SET_EDITING_ERROR(state, error) {
     state.editing.error = error;
+  },
+  RESET_EDITING(state) {
+    state.editing = getDefaultEditingState()
   },
 
   SET_ALBUM_PHOTOS(state, photos) {
@@ -114,20 +131,32 @@ const actions = {
   async save({ commit, state }) {
     // TODO: show toast after saved (success & error)
 
-    if (state.editing.album.id === 0) {
-      AlbumService.create(state.editing.album)
+    const model = new WriteAlbumModel();
+    model.id = state.editing.id;
+    model.title = state.editing.title;
+    model.description = state.editing.description;
+    model.locationId = state.editing.location
+      ? state.editing.location.id
+      : null;
+
+    if (state.editing.id === 0) {
+      AlbumService.create(model)
         .then((newAlbum) => {
-          commit('SET_IS_EDITING', false);
-          commit('SET_EDITING_ALBUM', new AlbumModel());
+          commit('RESET_EDITING');
           commit('ADD_USER_ALBUM', newAlbum);
         }).catch(() => {
           commit('SET_EDITING_ERROR', 'There was an error creating your album. Please try again.');
         });
     } else {
-      AlbumService.update(state.editing.album)
+      AlbumService.update(model)
         .then(() => {
-          commit('SET_IS_EDITING', false);
-          commit('SET_EDITING_ALBUM', new AlbumModel());
+          // TODO: Can't seem to figure out how to get props to update
+          // and not overwrite things they shouldn't (ie user)
+          commit('SET_VIEWING_ALBUM', {
+            title: state.editing.title,
+            description: state.editing.description
+          })
+          commit('RESET_EDITING');
         }).catch(() => {
           commit('SET_EDITING_ERROR', 'There was an error updating your album. Please try again.');
         });

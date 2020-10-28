@@ -20,6 +20,12 @@
           placeholder="Description"
         />
       </b-form-group>
+      <b-form-group label="Location" label-for="">
+        <location-selector
+          :value="location"
+          @change="locationChanged"
+        />
+      </b-form-group>
       <b-button type="submit" variant="primary">Save Album</b-button>
     </b-form>
   </div>
@@ -28,8 +34,12 @@
 <script>
 import { mapFields } from 'vuex-map-fields';
 import { mapActions } from 'vuex';
+import LocationSelector from '@/components/common/LocationSelector.vue';
 
 export default {
+  components: {
+    LocationSelector
+  },
   data() {
     return {
 
@@ -38,9 +48,10 @@ export default {
 
   computed: {
     ...mapFields('albums', [
-      'editing.album.id',
-      'editing.album.title',
-      'editing.album.description',
+      'editing.id',
+      'editing.title',
+      'editing.description',
+      'editing.location',
       'editing.error'
     ])
   },
@@ -52,6 +63,9 @@ export default {
       this.save().then(() => {
         this.$emit('album-saved');
       });
+    },
+    locationChanged(location) {
+      this.location = location;
     }
   }
 };
