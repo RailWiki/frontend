@@ -43,7 +43,11 @@ export default {
     ...mapFields('albums', [
       'userAlbums',
       'editing.isEditing',
-      'editing.album.id'
+      'editing.id',
+      'editing.title',
+      'editing.description',
+      'editing.location',
+      'editing.error'
     ])
   },
 

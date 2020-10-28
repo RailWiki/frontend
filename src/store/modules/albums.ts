@@ -1,5 +1,5 @@
 import { getField, updateField } from 'vuex-map-fields';
-import AlbumModel from '@/models/photos/Album';
+import AlbumModel, { WriteAlbumModel } from '@/models/photos/Album';
 import PhotoModel from '@/models/photos/Photo';
 import AlbumService from '@/services/albumService';
 import PhotoService from '@/services/photoService';
@@ -131,8 +131,16 @@ const actions = {
   async save({ commit, state }) {
     // TODO: show toast after saved (success & error)
 
+    const model = new WriteAlbumModel();
+    model.id = state.editing.id;
+    model.title = state.editing.title;
+    model.description = state.editing.description;
+    model.locationId = state.editing.location
+      ? state.editing.location.id
+      : null;
+
     if (state.editing.id === 0) {
-      AlbumService.create(state.editing)
+      AlbumService.create(model)
         .then((newAlbum) => {
           commit('RESET_EDITING');
           commit('ADD_USER_ALBUM', newAlbum);
@@ -140,7 +148,7 @@ const actions = {
           commit('SET_EDITING_ERROR', 'There was an error creating your album. Please try again.');
         });
     } else {
-      AlbumService.update(state.editing)
+      AlbumService.update(model)
         .then(() => {
           // TODO: Can't seem to figure out how to get props to update
           // and not overwrite things they shouldn't (ie user)
