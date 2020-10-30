@@ -1,5 +1,5 @@
 import ApiService from './api.service';
-import PhotoModel from '@/models/photos/Photo';
+import PhotoModel, { UpdatePhotoModel } from '@/models/photos/Photo';
 import { AxiosResponse } from 'axios';
 
 const photoService = {
@@ -44,15 +44,8 @@ const photoService = {
     });
   },
 
-  async updatePhoto(photo: PhotoModel): Promise<void> {
-    const data = {
-      ...photo
-    };
-
-    // Null these out otherwise the API will try to validate them
-    data.album = null;
-
-    return ApiService.put(`photos/${photo.id}`, data).then(() => {
+  async updatePhoto(photo: UpdatePhotoModel): Promise<void> {
+    return ApiService.put(`photos/${photo.id}`, photo).then(() => {
       // Nothing to do?
     });
   }

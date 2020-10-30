@@ -8,7 +8,7 @@
         <b-form-input
             id="titleInput"
             type="text"
-            v-model="editingPhoto.title"
+            v-model="title"
             required
             placeholder="Photo title"
         />
@@ -16,7 +16,7 @@
       <b-form-group label="Description" label-for="descriptionInput">
         <b-textarea
           id="descriptionInput"
-          v-model="editingPhoto.description"
+          v-model="description"
           rows="5"
           placeholder="Description of the photo"
         />
@@ -25,22 +25,27 @@
         <b-form-input
             id="authorInput"
             type="text"
-            v-model="editingPhoto.author"
+            v-model="author"
             placeholder="Original author of the photo"
         />
       </b-form-group>
       <b-form-group label="Location" label-for="locationInput">
-        <b-form-input
+        <!-- <b-form-input
             id="locationInput"
             type="text"
-            v-model="editingPhoto.locationName"
+            v-model="locationName"
             placeholder="Location of the photo"
+        /> -->
+        <location-selector
+          :value="location"
+          @change="locationChanged"
         />
+
       </b-form-group>
       <b-form-group label="Photo taken on" label-for="photoDateInput">
         <b-form-datepicker
           id="photoDateInput"
-          v-model="editingPhoto.photoDate"
+          v-model="photoDate"
           :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         />
       </b-form-group>
@@ -87,21 +92,20 @@
 <script>
 import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
-import PhotoModel from '@/models/photos/Photo';
+import { mapFields } from 'vuex-map-fields';
 import { FilterLocomotivesModel } from '@/models/rosters/Locomotive';
 import LocomotiveEditor from '@/components/locomotives/LocomotiveEditor.vue';
+import LocationSelector from '@/components/common/LocationSelector.vue';
 
 export default {
   props: {
-    photo: {
-      type: PhotoModel
-    },
     locomotives: {
       type: Array
     }
   },
   components: {
-    LocomotiveEditor
+    LocomotiveEditor,
+    LocationSelector
   },
   data() {
     return {
@@ -114,6 +118,15 @@ export default {
     this.selectedLocomotives = this.locomotives;
   },
   computed: {
+    ...mapFields('photos', [
+      'currentPhoto.id',
+      'currentPhoto.author',
+      'currentPhoto.locationName',
+      'currentPhoto.location',
+      'currentPhoto.title',
+      'currentPhoto.description',
+      'currentPhoto.photoDate'
+    ]),
     ...mapGetters('photos', [
       'isSaving',
       'editingError'
@@ -133,12 +146,15 @@ export default {
     ...mapActions('locomotivePhotos', {
       updatePhotoLocomotives: 'update'
     }),
+    locationChanged(location) {
+      this.location = location;
+    },
     async savePhoto() {
-      await this.updatePhoto(this.editingPhoto);
+      await this.updatePhoto();
 
       const locoIds = this.selectedLocomotives.map((x) => x.id);
       // TODO: saving photo locos is failing
-      await this.updatePhotoLocomotives({ photoId: this.photo.id, locoIds });
+      await this.updatePhotoLocomotives({ photoId: this.id, locoIds });
 
       this.$emit('photo-saved');
     },

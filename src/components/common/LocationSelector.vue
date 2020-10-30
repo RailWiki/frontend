@@ -2,9 +2,8 @@
   <div class="location-selector">
     <multiselect
       id="locationSelect"
-      v-model="selectedId"
       :value="value"
-      :options="locationOptions"
+      :options="locations"
       label="name"
       track-by="name"
       :internal-search="false"
@@ -16,9 +15,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { debounce } from 'lodash';
-// TODO: Use store
-import LocationService from '@/services/locationService';
 import { FilterLocationsModel } from '@/models/geography/Location';
 
 export default {
@@ -28,24 +26,28 @@ export default {
   },
   data() {
     return {
-      selectedId: null,
-      locationOptions: []
+      selectedId: null
     };
   },
-  created() {
+  computed: {
+    ...mapGetters('locations', [
+      'locations'
+    ])
+  },
+  mounted() {
     this.selectedId = this.value;
   },
   methods: {
+    ...mapActions('locations', [
+      'search'
+    ]),
     searchChanged: debounce(async function(query) {
-      console.log('query', query);
-
       const filter = new FilterLocationsModel();
       filter.name = query;
 
-      this.locationOptions = await LocationService.search(filter);
+      await this.search(filter);
     }, 500),
     locationSelected(location) {
-      // console.log('location selected', location);
       this.$emit('change', location);
     }
   }

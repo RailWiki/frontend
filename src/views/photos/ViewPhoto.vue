@@ -115,7 +115,7 @@ export default {
     canEdit() {
       return this.currentUser
         && this.isCurrentUserApproved
-        && this.currentUser.id === this.currentPhoto.userId;
+        && this.currentUser.id === this.currentPhoto.user.id;
     }
   },
 
