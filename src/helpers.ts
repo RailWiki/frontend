@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function truncateString(input: string, maxLength: number) {
   const append = '...';
 
@@ -8,3 +10,7 @@ export function truncateString(input: string, maxLength: number) {
   input = input.slice(0, maxLength);
   return `${input}${append}`;
 }
+
+export function utcToLocal(input: string) {
+  return moment.utc(input).local();
+};

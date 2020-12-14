@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex, { createLogger } from 'vuex';
 import Albums from './modules/albums';
+import CommentsModule from './modules/comments';
 import PhotosModule from './modules/photos';
 import RoadsModule from './modules/roads';
 import LocationModule from './modules/locations';
@@ -49,6 +50,7 @@ export default new Vuex.Store({
   },
   modules: {
     albums: Albums,
+    comments: CommentsModule,
     photos: PhotosModule,
     roads: RoadsModule,
     locations: LocationModule,

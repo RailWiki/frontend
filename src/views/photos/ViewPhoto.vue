@@ -78,6 +78,8 @@
           />
         </div>
       </b-sidebar>
+
+      <comment-list type="photo" :id="currentPhoto.id" class="mt-4" />
     </template>
   </div>
 </template>
@@ -85,10 +87,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import EditPhotoProperties from '@/components/photos/EditPhotoProperties.vue';
+import CommentList from '@/components/comments/CommentList.vue';
 
 export default {
   components: {
-    EditPhotoProperties
+    EditPhotoProperties,
+    CommentList
   },
 
   data() {
