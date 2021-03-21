@@ -3,30 +3,31 @@
     <main-nav v-if="!hideNavBar" />
 
     <div class="container body">
+      <loading-indicator />
       <router-view />
     </div>
-
-    <!-- <loading-indicator /> -->
   </div>
 </template>
 
 <script>
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 import MainNav from '@/components/MainNav.vue';
 
 export default {
   components: {
-    MainNav
+    LoadingIndicator,
+    MainNav,
   },
   data() {
     return {
-      hideNavBar: false
+      hideNavBar: false,
     };
   },
   async created() {
-    await this.configureApp()
+    await this.configureApp();
   },
   watch: {
-    $route: 'configureApp'
+    $route: 'configureApp',
   },
   methods: {
     async configureApp() {
@@ -34,8 +35,8 @@ export default {
       if (await this.$auth.isAuthenticated()) {
         await this.$store.dispatch('setCurrentUser');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -64,6 +64,7 @@
     },
     "rules": {
       "semi": [1, "always"],
+      "comma-dangle": ["warn", "always-multiline"],
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/member-ordering": "off",
       "space-before-function-paren": "off",

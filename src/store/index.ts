@@ -15,6 +15,7 @@ Vue.use(Vuex);
 
 export interface AppState {
   currentUser: UserModel | null;
+  apiCallsInProgress: number;
 }
 
 const logger = createLogger({
@@ -27,17 +28,28 @@ const logger = createLogger({
 
 export default new Vuex.Store({
   state: {
-    currentUser: null
+    currentUser: null,
+    apiCallsInProgress: 0,
   } as AppState,
   getters: {
     currentUser: (state) => state.currentUser,
     isCurrentUserApproved: (state) => state.currentUser
-      && state.currentUser.isApproved
+      && state.currentUser.isApproved,
+    apiCallsInProgress: (state: AppState) => state.apiCallsInProgress,
+    showLoadingIndicator: (state: AppState) => state.apiCallsInProgress > 0,
   },
   mutations: {
     SET_CURRENT_USER(state, user: UserModel) {
       state.currentUser = user;
-    }
+    },
+
+    INCREASE_CURRENT_API_CALL_COUNT(state: AppState) {
+      state.apiCallsInProgress = state.apiCallsInProgress + 1;
+    },
+
+    DECREASE_CURRENT_API_CALL_COUNT(state: AppState) {
+      state.apiCallsInProgress = state.apiCallsInProgress - 1;
+    },
   },
   actions: {
     async setCurrentUser({ commit, state }): Promise<void> {
