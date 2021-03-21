@@ -20,6 +20,7 @@ Vue.use(Auth, config.auth);
 Vue.use(VueMoment);
 
 Vue.filter('truncate', helpers.truncateString);
+Vue.filter('utcToLocal', helpers.utcToLocal);
 
 Vue.config.productionTip = false;
 
